@@ -36,8 +36,8 @@ export default function Header() {
           >
             About
           </Link>
-          <Link href="/submit" className="btn-primary ml-2">
-            Report an Incident
+          <Link href="/submit" className="btn-primary ml-2 px-5 py-2.5">
+            Report a Recruiter
           </Link>
         </nav>
       </div>

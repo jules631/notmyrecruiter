@@ -20,7 +20,7 @@
     .nav-link { font-size: 14px; padding: 6px 12px; border-radius: 6px; text-decoration: none; color: var(--text-secondary); }
     .nav-link.active { color: var(--accent); font-weight: 500; }
     .btn-primary { background: #E8453C; color: #fff; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; text-decoration: none; display: inline-block; }
-    .btn-primary.nav-btn { margin-left: 8px; }
+    .btn-primary.nav-btn { margin-left: 8px; padding: 10px 20px; }
     .btn-primary.full { display: block; width: 100%; text-align: center; padding: 12px 20px; }
     .btn-secondary { background: #fff; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; padding: 10px 20px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.15); cursor: pointer; text-decoration: none; display: inline-block; }
 
@@ -32,7 +32,7 @@
     .hero-sub { font-size: 16px; color: #6b6b6b; max-width: 520px; margin-bottom: 24px; line-height: 1.6; }
     .hero-ctas { display: flex; gap: 12px; margin-bottom: 32px; }
 
-    /* Stats bar — shows "—" for zero, live values otherwise */
+    /* Stats bar */
     .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 40px; }
     .stat { text-align: center; }
     .stat-number { font-family: 'DM Serif Display', serif; font-size: 26px; color: #E8453C; line-height: 1; display: block; }
@@ -77,32 +77,40 @@
     .empty-state p { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #6b6b6b; max-width: 360px; margin: 0 auto 24px; line-height: 1.6; }
 
     /* Form */
-    .divider { text-align: center; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #aaa; padding: 32px 0 8px; }
-    .divider::before, .divider::after { content: ''; display: inline-block; width: 60px; height: 1px; background: #ddd; vertical-align: middle; margin: 0 12px; }
-    .form-wrap { background: var(--surface); padding: 40px 16px; }
+    .form-wrap { background: var(--surface); padding: 40px 16px 64px; }
     .form-page { background: #fff; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); padding: 32px; max-width: 560px; margin: 0 auto; }
-    form { display: flex; flex-direction: column; gap: 24px; }
-    fieldset { border: none; padding: 0; }
-    legend { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; display: block; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .form-col { display: flex; flex-direction: column; }
+    .form-title { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 4px; }
+    .form-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; }
     label { display: block; font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
     input[type="text"], input[type="email"], input[type="url"], select, textarea { width: 100%; padding: 10px 16px; border: 1px solid rgba(0,0,0,0.15); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text-primary); background: #fff; outline: none; }
     ::placeholder { color: var(--text-secondary); }
     .helper-text { font-size: 12px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
-    hr { border: none; border-top: 1px solid rgba(0,0,0,0.1); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-field { margin-bottom: 16px; }
     .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .category-card { background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 16px; cursor: pointer; text-align: left; display: flex; flex-direction: column; }
     .category-card.selected { border-color: #E8453C; background: rgba(232,69,60,0.04); box-shadow: 0 0 0 1px rgba(232,69,60,0.3); }
     .cat-icon { font-size: 24px; margin-bottom: 6px; }
     .cat-label { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
     .cat-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
-    .privacy-box { display: flex; gap: 8px; align-items: flex-start; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 12px; }
+    .privacy-box { display: flex; gap: 8px; align-items: flex-start; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 12px; margin-bottom: 0; }
     .privacy-box p { font-size: 12px; color: #1d4ed8; line-height: 1.5; }
     textarea { resize: none; height: 96px; }
     .file-note { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
-    .submit-note { font-size: 12px; color: var(--text-secondary); text-align: center; }
+    .submit-note { font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 8px; }
     .submit-note a { text-decoration: underline; }
+    .form-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; }
+
+    /* Progress indicator */
+    .progress { display: flex; align-items: center; gap: 0; margin-bottom: 24px; }
+    .progress-dot { width: 8px; height: 8px; border-radius: 50%; transition: all 0.2s; }
+    .progress-dot.active { width: 10px; height: 10px; background: #E8453C; }
+    .progress-dot.done { background: #1a1a1a; }
+    .progress-dot.upcoming { background: #d4d4d4; }
+    .progress-line { height: 1px; width: 32px; transition: background 0.2s; }
+    .progress-line.done { background: #1a1a1a; }
+    .progress-line.upcoming { background: #d4d4d4; }
+    .progress-label { font-size: 12px; color: var(--text-secondary); margin-left: 8px; }
 
     /* Footer */
     footer { border-top: 1px solid rgba(0,0,0,0.1); background: #fff; }
@@ -118,58 +126,50 @@
 <!-- HEADER -->
 <header>
   <div class="header-inner">
-    <a href="#" class="wordmark">NotMyRecruiter</a>
+    <a href="#home" class="wordmark">NotMyRecruiter</a>
     <nav>
       <a href="#home" class="nav-link active">Browse</a>
       <a href="#about" class="nav-link">About</a>
-      <a href="#submit" class="btn-primary nav-btn">Report an Incident</a>
+      <a href="#step1" class="btn-primary nav-btn">Report a Recruiter</a>
     </nav>
   </div>
 </header>
 
-<!-- HOME PAGE — with data -->
-<div class="divider">Home page — with submissions</div>
+<!-- HOME — with submissions -->
 <div id="home" class="page">
   <div class="hero">
     <div class="eyebrow-pill">ACCOUNTABILITY FOR CANDIDATES</div>
-
     <h1 class="hero-h1">
       <span style="color:#1a1a1a;">Recruiters who ghost deserve to be&nbsp;</span><em style="color:#E8453C;">remembered.</em>
     </h1>
-
     <p class="hero-sub">
       A public record of recruiters who couldn't extend basic professional courtesy
       after your time and effort.
     </p>
-
-    <!-- Hero CTAs — visible above fold -->
     <div class="hero-ctas">
-      <a href="#submit" class="btn-primary">Report an incident</a>
+      <a href="#step1" class="btn-primary">Report an incident</a>
       <a href="#about" class="btn-secondary">How it works</a>
     </div>
-
-    <!-- Stats bar — live from Supabase, "—" shown when zero -->
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat-number">47</span><!-- live: SELECT COUNT(*) FROM submissions WHERE status='published' -->
+        <span class="stat-number">47</span>
         <span class="stat-label">Reports submitted</span>
       </div>
       <div class="stat">
-        <span class="stat-number">23</span><!-- live: COUNT(DISTINCT company_id) -->
+        <span class="stat-number">23</span>
         <span class="stat-label">Companies flagged</span>
       </div>
       <div class="stat">
-        <span class="stat-number">61%</span><!-- live: ghost category pct -->
+        <span class="stat-number">61%</span>
         <span class="stat-label">Post-interview ghosts</span>
       </div>
       <div class="stat">
-        <span class="stat-number">18 days</span><!-- live: avg(created_at - interview_date) -->
+        <span class="stat-number">18 days</span>
         <span class="stat-label">Avg wait before ghosting</span>
       </div>
     </div>
   </div>
 
-  <!-- Controls -->
   <div class="controls">
     <div class="chips-wrap">
       <button class="chip active">All</button>
@@ -184,7 +184,6 @@
     </div>
   </div>
 
-  <!-- Feed with submissions -->
   <div class="feed">
     <article class="card">
       <span class="badge b-category">👻 Ghosted</span>
@@ -206,7 +205,6 @@
         </div>
       </div>
     </article>
-
     <article class="card">
       <span class="badge b-category">🤖 Bot rejection</span>
       <div class="card-top">
@@ -223,10 +221,8 @@
   <p style="text-align:center;font-size:12px;color:var(--text-secondary);margin-top:32px;">2 reports</p>
 </div>
 
-
-<!-- HOME PAGE — empty state (zero submissions) -->
-<div class="divider">Home page — empty state (zero submissions)</div>
-<div class="page" style="padding-top:20px;">
+<!-- HOME — empty state -->
+<div class="page" style="padding-top:20px;border-top:1px solid rgba(0,0,0,0.06);">
   <div class="hero">
     <div class="eyebrow-pill">ACCOUNTABILITY FOR CANDIDATES</div>
     <h1 class="hero-h1">
@@ -237,32 +233,16 @@
       after your time and effort.
     </p>
     <div class="hero-ctas">
-      <a href="#submit" class="btn-primary">Report an incident</a>
+      <a href="#step1" class="btn-primary">Report an incident</a>
       <a href="#about" class="btn-secondary">How it works</a>
     </div>
-
-    <!-- Stats bar showing "—" for all four (zero data) -->
     <div class="stats-bar">
-      <div class="stat">
-        <span class="stat-number">—</span>
-        <span class="stat-label">Reports submitted</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">—</span>
-        <span class="stat-label">Companies flagged</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">—</span>
-        <span class="stat-label">Post-interview ghosts</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">—</span>
-        <span class="stat-label">Avg wait before ghosting</span>
-      </div>
+      <div class="stat"><span class="stat-number">—</span><span class="stat-label">Reports submitted</span></div>
+      <div class="stat"><span class="stat-number">—</span><span class="stat-label">Companies flagged</span></div>
+      <div class="stat"><span class="stat-number">—</span><span class="stat-label">Post-interview ghosts</span></div>
+      <div class="stat"><span class="stat-number">—</span><span class="stat-label">Avg wait before ghosting</span></div>
     </div>
   </div>
-
-  <!-- Controls still visible -->
   <div class="controls">
     <div class="chips-wrap">
       <button class="chip active">All</button>
@@ -276,88 +256,157 @@
       <input class="search-input" type="search" placeholder="Search company..." />
     </div>
   </div>
-
-  <!-- Empty state -->
   <div class="empty-state">
     <div class="empty-state-icon">👻</div>
     <h2>No reports yet</h2>
-    <p>
-      Reports appear here after the community submits and verifies them.
-      Know a recruiter who ghosted you? Be the first.
-    </p>
-    <a href="#submit" class="btn-primary">Submit the first report</a>
+    <p>Reports appear here after the community submits and verifies them. Know a recruiter who ghosted you? Be the first.</p>
+    <a href="#step1" class="btn-primary">Submit the first report</a>
   </div>
 </div>
 
-
-<!-- SUBMIT PAGE -->
-<div class="divider">Submit page</div>
-<div id="submit" class="form-wrap">
+<!-- SUBMIT — Step 1 of 4 -->
+<div id="step1" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
   <div class="form-page">
-    <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;">Report a recruiter</h2>
-    <p style="font-size:14px;color:var(--text-secondary);margin-bottom:28px;">Your submission will be reviewed before publishing. Evidence is permanently deleted after review.</p>
-    <form>
-      <fieldset>
-        <legend>Recruiter</legend>
-        <div class="form-row" style="margin-bottom:12px;">
-          <div class="form-col"><label>Full name *</label><input type="text" placeholder="Jane Smith" /></div>
-          <div class="form-col"><label>Title</label><input type="text" placeholder="Senior Technical Recruiter" /></div>
-        </div>
-        <div style="margin-bottom:12px;">
-          <label>LinkedIn URL *</label>
-          <input type="url" placeholder="https://linkedin.com/in/..." />
-          <p class="helper-text">Used as the identity source of truth. Ensures the right person is identified.</p>
-        </div>
-        <div><label>Company name *</label><input type="text" placeholder="Acme Corp" /></div>
-      </fieldset>
-      <hr />
-      <fieldset>
-        <legend>Timeline</legend>
-        <div class="form-row">
-          <div class="form-col"><label>Month of incident *</label><select><option>Month…</option><option selected>June</option></select></div>
-          <div class="form-col"><label>Year of incident *</label><select><option selected>2026</option><option>2025</option></select></div>
-        </div>
-      </fieldset>
-      <hr />
-      <fieldset>
-        <legend>What happened</legend>
-        <div class="category-grid">
-          <button type="button" class="category-card selected"><span class="cat-icon">👻</span><span class="cat-label">Ghosted after interview</span><span class="cat-desc">No follow-up after you interviewed</span></button>
-          <button type="button" class="category-card"><span class="cat-icon">🤖</span><span class="cat-label">Bot rejection only</span><span class="cat-desc">Just a form email, no human contact</span></button>
-          <button type="button" class="category-card"><span class="cat-icon">🚪</span><span class="cat-label">Cancelled &amp; disappeared</span><span class="cat-desc">Recruiter cancelled, never followed up</span></button>
-          <button type="button" class="category-card"><span class="cat-icon">📵</span><span class="cat-label">Cold outreach ghost</span><span class="cat-desc">They reached out, then went silent</span></button>
-        </div>
-      </fieldset>
-      <hr />
-      <fieldset>
-        <legend>Verify your experience *</legend>
-        <p class="helper-text" style="margin-bottom:16px;">A screenshot is required to verify the interaction occurred before your report can be published.</p>
-        <div style="margin-bottom:12px;"><label>Evidence type *</label><select><option>Select evidence type…</option><option selected>Calendar invite</option></select></div>
-        <div style="margin-bottom:12px;">
-          <label>Upload file *</label>
-          <div style="border:1px solid rgba(0,0,0,0.12);border-radius:8px;padding:12px 16px;background:#fff;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:10px;"><span style="border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:500;background:#fff;">Choose file</span><span>No file chosen</span></div>
-          <p class="file-note">Accepted: JPG, PNG, PDF</p>
-        </div>
-        <div class="privacy-box">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20" style="color:#60a5fa;flex-shrink:0;margin-top:1px;"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-          <p>Your screenshot is reviewed by an admin and permanently deleted after review. It is never stored long-term or displayed publicly.</p>
-        </div>
-      </fieldset>
-      <hr />
+    <div class="progress">
+      <div class="progress-dot active"></div>
+      <div class="progress-line upcoming"></div>
+      <div class="progress-dot upcoming"></div>
+      <div class="progress-line upcoming"></div>
+      <div class="progress-dot upcoming"></div>
+      <div class="progress-line upcoming"></div>
+      <div class="progress-dot upcoming"></div>
+      <span class="progress-label">Step 1 of 4</span>
+    </div>
+    <h2 class="form-title">Report a Recruiter</h2>
+    <p class="form-subtitle">Tell us who ghosted you.</p>
+    <div class="form-row form-field">
+      <div><label>Full name *</label><input type="text" placeholder="Jane Smith" /></div>
+      <div><label>Title</label><input type="text" placeholder="Senior Technical Recruiter" /></div>
+    </div>
+    <div class="form-field">
+      <label>LinkedIn URL *</label>
+      <input type="url" placeholder="https://linkedin.com/in/..." />
+      <p class="helper-text">Used as the identity source of truth. Ensures the right person is identified.</p>
+    </div>
+    <div class="form-field" style="margin-bottom:0;">
+      <label>Company name *</label>
+      <input type="text" placeholder="Acme Corp" />
+    </div>
+    <div class="form-nav">
+      <span></span>
+      <a href="#step2" class="btn-primary">Next</a>
+    </div>
+  </div>
+</div>
+
+<!-- SUBMIT — Step 2 of 4 -->
+<div id="step2" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
+  <div class="form-page">
+    <div class="progress">
+      <div class="progress-dot done"></div>
+      <div class="progress-line done"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-line upcoming"></div>
+      <div class="progress-dot upcoming"></div>
+      <div class="progress-line upcoming"></div>
+      <div class="progress-dot upcoming"></div>
+      <span class="progress-label">Step 2 of 4</span>
+    </div>
+    <h2 class="form-title">Report a Recruiter</h2>
+    <p class="form-subtitle">Tell us what happened and when.</p>
+    <div class="form-row form-field">
       <div>
-        <label>Summary * <span style="font-weight:normal;font-size:12px;color:var(--text-secondary);">43/150</span></label>
-        <textarea>Confirmed interview, no follow-up despite two attempts.</textarea>
-        <p class="helper-text">Keep it factual. Avoid names of third parties not involved in the hiring process.</p>
+        <label>Month of incident *</label>
+        <select><option>Month…</option><option selected>June</option></select>
       </div>
-      <hr />
       <div>
-        <label>Your email *</label>
-        <input type="email" placeholder="you@example.com" />
-        <p class="helper-text">For verification only. Never stored in plaintext or displayed publicly.</p>
+        <label>Year of incident *</label>
+        <select><option selected>2026</option><option>2025</option></select>
       </div>
-      <button type="submit" class="btn-primary full">Submit report</button>
-      <p class="submit-note">By submitting you agree to our <a href="#">community standards</a>.</p>
-    </form>
+    </div>
+    <div class="form-field" style="margin-bottom:0;">
+      <p style="font-size:14px;font-weight:500;margin-bottom:12px;">What happened? *</p>
+      <div class="category-grid">
+        <button type="button" class="category-card selected"><span class="cat-icon">👻</span><span class="cat-label">Ghosted after interview</span><span class="cat-desc">No follow-up after you interviewed</span></button>
+        <button type="button" class="category-card"><span class="cat-icon">🤖</span><span class="cat-label">Bot rejection only</span><span class="cat-desc">Just a form email, no human contact</span></button>
+        <button type="button" class="category-card"><span class="cat-icon">🚪</span><span class="cat-label">Cancelled &amp; disappeared</span><span class="cat-desc">Recruiter cancelled, never followed up</span></button>
+        <button type="button" class="category-card"><span class="cat-icon">📵</span><span class="cat-label">Cold outreach ghost</span><span class="cat-desc">They reached out, then went silent</span></button>
+      </div>
+    </div>
+    <div class="form-nav">
+      <a href="#step1" class="btn-secondary">Back</a>
+      <a href="#step3" class="btn-primary">Next</a>
+    </div>
+  </div>
+</div>
+
+<!-- SUBMIT — Step 3 of 4 -->
+<div id="step3" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
+  <div class="form-page">
+    <div class="progress">
+      <div class="progress-dot done"></div>
+      <div class="progress-line done"></div>
+      <div class="progress-dot done"></div>
+      <div class="progress-line done"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-line upcoming"></div>
+      <div class="progress-dot upcoming"></div>
+      <span class="progress-label">Step 3 of 4</span>
+    </div>
+    <h2 class="form-title">Report a Recruiter</h2>
+    <p class="form-subtitle">Upload evidence of the interaction.</p>
+    <p class="helper-text" style="margin-bottom:16px;">A screenshot is required to verify the interaction occurred before your report can be published.</p>
+    <div class="form-field">
+      <label>Evidence type *</label>
+      <select><option>Select evidence type…</option><option selected>Calendar invite</option></select>
+      <p class="helper-text">An invite from the recruiter or company domain for a scheduled interview.</p>
+    </div>
+    <div class="form-field">
+      <label>Upload file *</label>
+      <div style="border:1px solid rgba(0,0,0,0.12);border-radius:8px;padding:12px 16px;background:#fff;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:10px;"><span style="border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:500;background:#fff;color:var(--text-primary);">Choose file</span><span>No file chosen</span></div>
+      <p class="file-note">Accepted: JPG, PNG, PDF</p>
+    </div>
+    <div class="privacy-box">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20" style="color:#60a5fa;flex-shrink:0;margin-top:1px;"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+      <p>Your screenshot is reviewed by an admin and permanently deleted after review. It is never stored long-term or displayed publicly.</p>
+    </div>
+    <div class="form-nav">
+      <a href="#step2" class="btn-secondary">Back</a>
+      <a href="#step4" class="btn-primary">Next</a>
+    </div>
+  </div>
+</div>
+
+<!-- SUBMIT — Step 4 of 4 -->
+<div id="step4" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
+  <div class="form-page">
+    <div class="progress">
+      <div class="progress-dot done"></div>
+      <div class="progress-line done"></div>
+      <div class="progress-dot done"></div>
+      <div class="progress-line done"></div>
+      <div class="progress-dot done"></div>
+      <div class="progress-line done"></div>
+      <div class="progress-dot active"></div>
+      <span class="progress-label">Step 4 of 4</span>
+    </div>
+    <h2 class="form-title">Report a Recruiter</h2>
+    <p class="form-subtitle">Add context and confirm your report.</p>
+    <div class="form-field">
+      <label>Summary * <span style="font-weight:normal;font-size:12px;color:var(--text-secondary);">43/150</span></label>
+      <textarea>Confirmed interview, no follow-up despite two attempts.</textarea>
+      <p class="helper-text">Keep it factual. Avoid names of third parties not involved in the hiring process.</p>
+    </div>
+    <div class="form-field" style="margin-bottom:0;">
+      <label>Your email *</label>
+      <input type="email" placeholder="you@example.com" />
+      <p class="helper-text">For verification only. Never stored in plaintext or displayed publicly.</p>
+    </div>
+    <div class="form-nav">
+      <a href="#step3" class="btn-secondary">Back</a>
+      <button type="submit" class="btn-primary">Submit report</button>
+    </div>
+    <p class="submit-note">By submitting you agree to our <a href="#">community standards</a>.</p>
   </div>
 </div>
 
