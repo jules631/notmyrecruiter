@@ -6,6 +6,12 @@ export type SubmissionStatus = 'pending' | 'published' | 'under_review' | 'remov
 export type DisputeTier = 'tier_1' | 'tier_2'
 export type DisputeStatus = 'pending' | 'accepted' | 'rejected'
 
+export type SubmissionCategory =
+  | 'ghosted_after_interview'
+  | 'bot_rejection'
+  | 'cancelled_disappeared'
+  | 'cold_outreach_ghost'
+
 export type EvidenceType =
   | 'calendar_invite'
   | 'ats_confirmation'
@@ -59,10 +65,10 @@ export interface Submission {
   submitter_id: string
   recruiter_id: string
   company_id: string
+  category: SubmissionCategory | null
   summary: string
   interview_date: string
   last_contact_date: string | null
-  role_applied: string | null
   status: SubmissionStatus
   flag_count: number
   has_rebuttal: boolean

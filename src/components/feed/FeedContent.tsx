@@ -31,10 +31,7 @@ export default function FeedContent() {
     }
 
     if (search.trim()) {
-      // Search across recruiter name, company name, role
-      query = query.or(
-        `summary.ilike.%${search}%,role_applied.ilike.%${search}%`
-      )
+      query = query.or(`summary.ilike.%${search}%`)
     }
 
     const { data, error } = await query.limit(50)
@@ -49,8 +46,7 @@ export default function FeedContent() {
           (s) =>
             s.recruiters?.name?.toLowerCase().includes(q) ||
             s.companies?.name?.toLowerCase().includes(q) ||
-            s.summary.toLowerCase().includes(q) ||
-            s.role_applied?.toLowerCase().includes(q)
+            s.summary.toLowerCase().includes(q)
         )
       }
 

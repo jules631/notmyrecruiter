@@ -2,17 +2,15 @@
 
 import { useState, type FormEvent, type ChangeEvent } from 'react'
 import { createClient } from '@/lib/supabase'
-import type { EvidenceType } from '@/lib/types'
+import type { EvidenceType, SubmissionCategory } from '@/lib/types'
 
 interface FormState {
   recruiter_name: string
   recruiter_title: string
   recruiter_linkedin: string
   company_name: string
-  company_domain: string
-  role_applied: string
-  interview_date: string
-  last_contact_date: string
+  incident_month: string
+  incident_year: string
   summary: string
   submitter_email: string
 }
@@ -22,13 +20,56 @@ const INITIAL: FormState = {
   recruiter_title: '',
   recruiter_linkedin: '',
   company_name: '',
-  company_domain: '',
-  role_applied: '',
-  interview_date: '',
-  last_contact_date: '',
+  incident_month: '',
+  incident_year: '',
   summary: '',
   submitter_email: '',
 }
+
+const MONTHS = [
+  { value: '01', label: 'January' },
+  { value: '02', label: 'February' },
+  { value: '03', label: 'March' },
+  { value: '04', label: 'April' },
+  { value: '05', label: 'May' },
+  { value: '06', label: 'June' },
+  { value: '07', label: 'July' },
+  { value: '08', label: 'August' },
+  { value: '09', label: 'September' },
+  { value: '10', label: 'October' },
+  { value: '11', label: 'November' },
+  { value: '12', label: 'December' },
+]
+
+const currentYear = new Date().getFullYear()
+const YEARS = Array.from({ length: 5 }, (_, i) => String(currentYear - i))
+
+const CATEGORIES: { value: SubmissionCategory; icon: string; label: string; description: string }[] = [
+  {
+    value: 'ghosted_after_interview',
+    icon: '👻',
+    label: 'Ghosted after interview',
+    description: 'No follow-up after you interviewed',
+  },
+  {
+    value: 'bot_rejection',
+    icon: '🤖',
+    label: 'Bot rejection only',
+    description: 'Just a form email, no human contact',
+  },
+  {
+    value: 'cancelled_disappeared',
+    icon: '🚪',
+    label: 'Cancelled & disappeared',
+    description: 'Recruiter cancelled, never followed up',
+  },
+  {
+    value: 'cold_outreach_ghost',
+    icon: '📵',
+    label: 'Cold outreach ghost',
+    description: 'They reached out, then went silent',
+  },
+]
 
 const EVIDENCE_OPTIONS: { value: EvidenceType; label: string; description: string }[] = [
   {
@@ -60,6 +101,7 @@ const EVIDENCE_OPTIONS: { value: EvidenceType; label: string; description: strin
 
 export default function SubmissionForm() {
   const [form, setForm] = useState<FormState>(INITIAL)
+  const [category, setCategory] = useState<SubmissionCategory | ''>('')
   const [evidenceType, setEvidenceType] = useState<EvidenceType | ''>('')
   const [evidenceFile, setEvidenceFile] = useState<File | null>(null)
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
@@ -69,11 +111,8 @@ export default function SubmissionForm() {
   const charLimit = 150
 
   function set(field: keyof FormState) {
-    return (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const value =
-        field === 'summary'
-          ? e.target.value.slice(0, charLimit)
-          : e.target.value
+    return (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      const value = field === 'summary' ? e.target.value.slice(0, charLimit) : e.target.value
       setForm((prev) => ({ ...prev, [field]: value }))
     }
   }
@@ -87,6 +126,11 @@ export default function SubmissionForm() {
     setStatus('submitting')
     setErrorMsg('')
 
+    if (!category) {
+      setErrorMsg('Please select a category.')
+      setStatus('error')
+      return
+    }
     if (!evidenceType) {
       setErrorMsg('Please select an evidence type.')
       setStatus('error')
@@ -101,13 +145,14 @@ export default function SubmissionForm() {
     try {
       const supabase = createClient()
 
-      // 1. Upsert company
+      // 1. Upsert company by name
       let companyId: string
+      const companyName = form.company_name.trim()
 
       const { data: existingCompany } = await supabase
         .from('companies')
         .select('id')
-        .eq('domain', form.company_domain.toLowerCase().trim())
+        .ilike('name', companyName)
         .single()
 
       if (existingCompany) {
@@ -115,7 +160,7 @@ export default function SubmissionForm() {
       } else {
         const { data: newCompany, error: companyError } = await supabase
           .from('companies')
-          .insert({ name: form.company_name.trim(), domain: form.company_domain.toLowerCase().trim() })
+          .insert({ name: companyName })
           .select('id')
           .single()
 
@@ -125,33 +170,16 @@ export default function SubmissionForm() {
 
       // 2. Upsert recruiter
       let recruiterId: string
+      const linkedinUrl = form.recruiter_linkedin.trim()
 
-      const linkedinUrl = form.recruiter_linkedin.trim() || null
+      const { data: existingRecruiter } = await supabase
+        .from('recruiters')
+        .select('id')
+        .eq('linkedin_url', linkedinUrl)
+        .single()
 
-      if (linkedinUrl) {
-        const { data: existingRecruiter } = await supabase
-          .from('recruiters')
-          .select('id')
-          .eq('linkedin_url', linkedinUrl)
-          .single()
-
-        if (existingRecruiter) {
-          recruiterId = existingRecruiter.id
-        } else {
-          const { data: newRecruiter, error: recruiterError } = await supabase
-            .from('recruiters')
-            .insert({
-              company_id: companyId,
-              name: form.recruiter_name.trim(),
-              title: form.recruiter_title.trim() || null,
-              linkedin_url: linkedinUrl,
-            })
-            .select('id')
-            .single()
-
-          if (recruiterError || !newRecruiter) throw new Error('Could not create recruiter')
-          recruiterId = newRecruiter.id
-        }
+      if (existingRecruiter) {
+        recruiterId = existingRecruiter.id
       } else {
         const { data: newRecruiter, error: recruiterError } = await supabase
           .from('recruiters')
@@ -159,6 +187,7 @@ export default function SubmissionForm() {
             company_id: companyId,
             name: form.recruiter_name.trim(),
             title: form.recruiter_title.trim() || null,
+            linkedin_url: linkedinUrl,
           })
           .select('id')
           .single()
@@ -169,7 +198,6 @@ export default function SubmissionForm() {
 
       // 3. Upsert submitter
       const { data: { user } } = await supabase.auth.getUser()
-
       let submitterId: string
 
       const { data: existingSubmitter } = await supabase
@@ -195,17 +223,18 @@ export default function SubmissionForm() {
         submitterId = newSubmitter.id
       }
 
-      // 4. Insert submission (get ID first for storage path)
+      // 4. Insert submission
+      const interviewDate = `${form.incident_year}-${form.incident_month}-01`
+
       const { data: newSubmission, error: submissionError } = await supabase
         .from('submissions')
         .insert({
           submitter_id: submitterId,
           recruiter_id: recruiterId,
           company_id: companyId,
+          category,
           summary: form.summary.trim(),
-          interview_date: form.interview_date,
-          last_contact_date: form.last_contact_date || null,
-          role_applied: form.role_applied.trim() || null,
+          interview_date: interviewDate,
           status: 'pending',
           evidence_type: evidenceType,
           evidence_reviewed: false,
@@ -234,6 +263,7 @@ export default function SubmissionForm() {
 
       setStatus('success')
       setForm(INITIAL)
+      setCategory('')
       setEvidenceType('')
       setEvidenceFile(null)
     } catch (err: unknown) {
@@ -254,10 +284,7 @@ export default function SubmissionForm() {
           Your report is pending evidence review. Once your screenshot is reviewed and
           the 14-day waiting period has passed, it will be published.
         </p>
-        <button
-          className="btn-secondary mt-6"
-          onClick={() => setStatus('idle')}
-        >
+        <button className="btn-secondary mt-6" onClick={() => setStatus('idle')}>
           Submit another
         </button>
       </div>
@@ -265,73 +292,139 @@ export default function SubmissionForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      {/* Recruiter info */}
+    <form onSubmit={handleSubmit} className="space-y-6">
+
+      {/* Section 1 — Recruiter */}
       <fieldset>
         <legend className="text-sm font-semibold text-[var(--text-primary)] mb-3">
           Recruiter
         </legend>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 mb-3">
           <div>
             <label className="label" htmlFor="recruiter_name">Full name *</label>
-            <input id="recruiter_name" className="input" required value={form.recruiter_name} onChange={set('recruiter_name')} placeholder="Jane Smith" />
+            <input
+              id="recruiter_name"
+              className="input"
+              required
+              value={form.recruiter_name}
+              onChange={set('recruiter_name')}
+              placeholder="Jane Smith"
+            />
           </div>
           <div>
             <label className="label" htmlFor="recruiter_title">Title</label>
-            <input id="recruiter_title" className="input" value={form.recruiter_title} onChange={set('recruiter_title')} placeholder="Senior Recruiter" />
+            <input
+              id="recruiter_title"
+              className="input"
+              value={form.recruiter_title}
+              onChange={set('recruiter_title')}
+              placeholder="Senior Technical Recruiter"
+            />
           </div>
         </div>
-        <div className="mt-3">
-          <label className="label" htmlFor="recruiter_linkedin">LinkedIn URL</label>
-          <input id="recruiter_linkedin" className="input" value={form.recruiter_linkedin} onChange={set('recruiter_linkedin')} placeholder="https://linkedin.com/in/..." type="url" />
+        <div className="mb-3">
+          <label className="label" htmlFor="recruiter_linkedin">LinkedIn URL *</label>
+          <input
+            id="recruiter_linkedin"
+            className="input"
+            required
+            type="url"
+            value={form.recruiter_linkedin}
+            onChange={set('recruiter_linkedin')}
+            placeholder="https://linkedin.com/in/..."
+          />
+          <p className="text-xs text-[var(--text-secondary)] mt-1.5 leading-relaxed">
+            Used as the identity source of truth. Ensures the right person is identified.
+          </p>
+        </div>
+        <div>
+          <label className="label" htmlFor="company_name">Company name *</label>
+          <input
+            id="company_name"
+            className="input"
+            required
+            value={form.company_name}
+            onChange={set('company_name')}
+            placeholder="Acme Corp"
+          />
         </div>
       </fieldset>
 
       <hr className="border-[var(--card-border)]" />
 
-      {/* Company info */}
-      <fieldset>
-        <legend className="text-sm font-semibold text-[var(--text-primary)] mb-3">
-          Company
-        </legend>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="label" htmlFor="company_name">Company name *</label>
-            <input id="company_name" className="input" required value={form.company_name} onChange={set('company_name')} placeholder="Acme Corp" />
-          </div>
-          <div>
-            <label className="label" htmlFor="company_domain">Domain *</label>
-            <input id="company_domain" className="input" required value={form.company_domain} onChange={set('company_domain')} placeholder="acme.com" />
-          </div>
-        </div>
-        <div className="mt-3">
-          <label className="label" htmlFor="role_applied">Role you applied for</label>
-          <input id="role_applied" className="input" value={form.role_applied} onChange={set('role_applied')} placeholder="Software Engineer, L4" />
-        </div>
-      </fieldset>
-
-      <hr className="border-[var(--card-border)]" />
-
-      {/* Dates */}
+      {/* Section 2 — Timeline */}
       <fieldset>
         <legend className="text-sm font-semibold text-[var(--text-primary)] mb-3">
           Timeline
         </legend>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="label" htmlFor="interview_date">Interview date *</label>
-            <input id="interview_date" className="input" required type="date" value={form.interview_date} onChange={set('interview_date')} max={new Date().toISOString().split('T')[0]} />
+            <label className="label" htmlFor="incident_month">Month of incident *</label>
+            <select
+              id="incident_month"
+              className="input"
+              required
+              value={form.incident_month}
+              onChange={set('incident_month')}
+            >
+              <option value="">Month…</option>
+              {MONTHS.map((m) => (
+                <option key={m.value} value={m.value}>{m.label}</option>
+              ))}
+            </select>
           </div>
           <div>
-            <label className="label" htmlFor="last_contact_date">Last contact date</label>
-            <input id="last_contact_date" className="input" type="date" value={form.last_contact_date} onChange={set('last_contact_date')} />
+            <label className="label" htmlFor="incident_year">Year of incident *</label>
+            <select
+              id="incident_year"
+              className="input"
+              required
+              value={form.incident_year}
+              onChange={set('incident_year')}
+            >
+              <option value="">Year…</option>
+              {YEARS.map((y) => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
           </div>
         </div>
       </fieldset>
 
       <hr className="border-[var(--card-border)]" />
 
-      {/* Evidence — verify your experience */}
+      {/* Section 3 — What happened */}
+      <fieldset>
+        <legend className="text-sm font-semibold text-[var(--text-primary)] mb-3">
+          What happened
+        </legend>
+        <div className="grid grid-cols-2 gap-3">
+          {CATEGORIES.map((cat) => (
+            <button
+              key={cat.value}
+              type="button"
+              onClick={() => setCategory(cat.value)}
+              className={`text-left rounded-[10px] border p-4 transition-all duration-150 ${
+                category === cat.value
+                  ? 'border-accent bg-accent/5 ring-1 ring-accent/30'
+                  : 'border-[rgba(0,0,0,0.1)] bg-white hover:border-[rgba(0,0,0,0.2)] hover:shadow-sm'
+              }`}
+            >
+              <div className="text-2xl mb-1.5">{cat.icon}</div>
+              <div className="text-sm font-medium text-[var(--text-primary)] leading-snug mb-0.5">
+                {cat.label}
+              </div>
+              <div className="text-xs text-[var(--text-secondary)] leading-snug">
+                {cat.description}
+              </div>
+            </button>
+          ))}
+        </div>
+      </fieldset>
+
+      <hr className="border-[var(--card-border)]" />
+
+      {/* Section 4 — Verify your experience */}
       <fieldset>
         <legend className="text-sm font-semibold text-[var(--text-primary)] mb-1">
           Verify your experience *
@@ -341,7 +434,6 @@ export default function SubmissionForm() {
           can be published. Select the type of evidence you are providing below.
         </p>
 
-        {/* Evidence type dropdown */}
         <div className="mb-3">
           <label className="label" htmlFor="evidence_type">Evidence type *</label>
           <select
@@ -353,9 +445,7 @@ export default function SubmissionForm() {
           >
             <option value="">Select evidence type…</option>
             {EVIDENCE_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
           {evidenceType && (
@@ -365,24 +455,8 @@ export default function SubmissionForm() {
           )}
         </div>
 
-        {/* Accepted types reference */}
-        <div className="rounded-lg border border-[var(--card-border)] bg-gray-50/60 p-3 mb-3 space-y-1.5">
-          <p className="text-xs font-medium text-[var(--text-primary)] mb-2">Accepted evidence</p>
-          {EVIDENCE_OPTIONS.map((opt) => (
-            <div key={opt.value} className="flex gap-2 text-xs text-[var(--text-secondary)]">
-              <span className="text-[var(--text-primary)] font-medium shrink-0">·</span>
-              <span>
-                <span className="font-medium text-[var(--text-primary)]">{opt.label}</span>
-                {' — '}
-                {opt.description}
-              </span>
-            </div>
-          ))}
-        </div>
-
-        {/* File upload */}
         <div className="mb-3">
-          <label className="label" htmlFor="evidence_file">Upload screenshot *</label>
+          <label className="label" htmlFor="evidence_file">Upload file *</label>
           <input
             id="evidence_file"
             type="file"
@@ -391,16 +465,18 @@ export default function SubmissionForm() {
             onChange={handleFileChange}
             className="block w-full text-sm text-[var(--text-secondary)] file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border file:border-[var(--card-border)] file:text-xs file:font-medium file:text-[var(--text-primary)] file:bg-white hover:file:bg-gray-50 file:cursor-pointer cursor-pointer"
           />
+          <p className="text-xs text-[var(--text-secondary)] mt-1">
+            Accepted: JPG, PNG, PDF
+          </p>
           {evidenceFile && (
-            <p className="text-xs text-[var(--text-secondary)] mt-1.5">
+            <p className="text-xs text-[var(--text-secondary)] mt-1">
               Selected: <span className="font-medium text-[var(--text-primary)]">{evidenceFile.name}</span>
               {' '}({(evidenceFile.size / 1024).toFixed(0)} KB)
             </p>
           )}
         </div>
 
-        {/* Privacy notice */}
-        <div className="flex gap-2 items-start bg-blue-50/60 border border-blue-100 rounded-lg px-3 py-2.5">
+        <div className="flex gap-2 items-start bg-blue-50 border border-blue-100 rounded-lg px-3 py-2.5">
           <svg className="w-3.5 h-3.5 text-blue-400 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
           </svg>
@@ -413,10 +489,10 @@ export default function SubmissionForm() {
 
       <hr className="border-[var(--card-border)]" />
 
-      {/* Summary */}
+      {/* Section 5 — Summary */}
       <div>
         <label className="label" htmlFor="summary">
-          What happened? *
+          Summary *
           <span className={`ml-2 font-normal ${charCount >= charLimit ? 'text-accent' : 'text-[var(--text-secondary)]'}`}>
             {charCount}/{charLimit}
           </span>
@@ -437,12 +513,20 @@ export default function SubmissionForm() {
 
       <hr className="border-[var(--card-border)]" />
 
-      {/* Email */}
+      {/* Section 6 — Your email */}
       <div>
-        <label className="label" htmlFor="submitter_email">Your email * (for verification)</label>
-        <input id="submitter_email" className="input" required type="email" value={form.submitter_email} onChange={set('submitter_email')} placeholder="you@example.com" />
-        <p className="text-xs text-[var(--text-secondary)] mt-1">
-          We&apos;ll send a verification link. Your email is never shown publicly.
+        <label className="label" htmlFor="submitter_email">Your email *</label>
+        <input
+          id="submitter_email"
+          className="input"
+          required
+          type="email"
+          value={form.submitter_email}
+          onChange={set('submitter_email')}
+          placeholder="you@example.com"
+        />
+        <p className="text-xs text-[var(--text-secondary)] mt-1.5 leading-relaxed">
+          For verification only. Never stored in plaintext or displayed publicly.
         </p>
       </div>
 

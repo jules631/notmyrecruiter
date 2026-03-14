@@ -7,15 +7,58 @@ export default function HomePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       {/* Hero */}
-      <div className="mb-8">
-        <h1 className="text-4xl font-serif text-[var(--text-primary)] mb-2">
+      <div className="mb-10">
+        {/* Eyebrow pill */}
+        <div className="inline-flex items-center mb-4">
+          <span
+            className="text-[#E8453C] uppercase font-medium tracking-wide"
+            style={{
+              background: '#FFF0EF',
+              fontSize: '12px',
+              borderRadius: '20px',
+              padding: '4px 12px',
+            }}
+          >
+            Community-driven accountability
+          </span>
+        </div>
+
+        {/* H1 */}
+        <h1
+          className="font-serif text-[#1a1a1a] mb-4"
+          style={{ fontSize: '48px', letterSpacing: '-1px', lineHeight: 1.1 }}
+        >
           Recruiter Accountability,<br />
-          <span className="text-accent">Community-Driven.</span>
+          <span style={{ color: '#E8453C' }}>Community-Driven.</span>
         </h1>
-        <p className="text-[var(--text-secondary)] text-base mt-3 max-w-xl">
+
+        {/* Subtext */}
+        <p className="font-sans mb-8 max-w-xl" style={{ fontSize: '16px', color: '#6b6b6b' }}>
           Real reports from real candidates. When recruiters ghost you after interviews,
           the community should know.
         </p>
+
+        {/* Stats bar */}
+        <div className="grid grid-cols-4 gap-4 py-6 border-y border-[rgba(0,0,0,0.08)]">
+          {[
+            { number: '2.4k', label: 'Reports filed' },
+            { number: '89%', label: 'Verified reports' },
+            { number: '14d', label: 'Avg. review time' },
+            { number: '340', label: 'Companies tracked' },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div
+                className="font-serif"
+                style={{ fontSize: '28px', color: '#E8453C', lineHeight: 1 }}
+              >
+                {stat.number}
+              </div>
+              <div className="text-xs mt-1" style={{ color: '#6b6b6b' }}>
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       <Suspense fallback={<FeedSkeleton />}>
