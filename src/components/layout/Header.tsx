@@ -17,9 +17,9 @@ export default function Header() {
         {/* Nav */}
         <nav className="flex items-center gap-1">
           <Link
-            href="/"
+            href="/browse"
             className={`text-sm px-3 py-1.5 rounded-md transition-colors ${
-              pathname === '/'
+              pathname === '/browse'
                 ? 'text-accent font-medium'
                 : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
             }`}

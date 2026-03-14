@@ -81,10 +81,16 @@ export default function FeedContent() {
           ))}
         </div>
       ) : submissions.length === 0 ? (
-        search ? (
-          <div className="text-center py-16 text-[var(--text-secondary)]">
+        (search || filter !== 'all') ? (
+          <div className="text-center py-16">
             <div className="text-3xl mb-3">🔍</div>
-            <p className="text-sm">No reports match your search.</p>
+            <p className="text-sm text-[var(--text-secondary)] mb-4">No reports match your search.</p>
+            <button
+              onClick={() => { setFilter('all'); setSearch('') }}
+              className="btn-secondary text-sm"
+            >
+              Clear filters
+            </button>
           </div>
         ) : (
           <div className="text-center" style={{ padding: '48px 24px' }}>

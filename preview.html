@@ -10,7 +10,12 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --accent: #E8453C; --surface: #f9f8f5; --text-primary: #1a1a1a; --text-secondary: #6b6b6b; }
-    body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--surface); color: var(--text-primary); -webkit-font-smoothing: antialiased; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: #eceae4; color: var(--text-primary); -webkit-font-smoothing: antialiased; }
+
+    /* Section wrapper */
+    .section-label { text-align: center; font-size: 11px; font-weight: 500; color: #999; letter-spacing: 0.1em; text-transform: uppercase; padding: 32px 0 16px; }
+    .section-divider { border: none; border-top: 1px solid rgba(0,0,0,0.12); margin: 0; }
+    .section-frame { background: var(--surface); max-width: 960px; margin: 0 auto; box-shadow: 0 2px 16px rgba(0,0,0,0.08); }
 
     /* Header */
     header { border-bottom: 1px solid rgba(0,0,0,0.1); background: #fff; position: sticky; top: 0; z-index: 50; }
@@ -20,8 +25,7 @@
     .nav-link { font-size: 14px; padding: 6px 12px; border-radius: 6px; text-decoration: none; color: var(--text-secondary); }
     .nav-link.active { color: var(--accent); font-weight: 500; }
     .btn-primary { background: #E8453C; color: #fff; font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; text-decoration: none; display: inline-block; }
-    .btn-primary.nav-btn { margin-left: 8px; padding: 10px 20px; }
-    .btn-primary.full { display: block; width: 100%; text-align: center; padding: 12px 20px; }
+    .btn-primary.nav-btn { margin-left: 8px; }
     .btn-secondary { background: #fff; color: var(--text-primary); font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px; padding: 10px 20px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.15); cursor: pointer; text-decoration: none; display: inline-block; }
 
     /* Page */
@@ -30,7 +34,13 @@
     .eyebrow-pill { display: inline-flex; align-items: center; background: #FFF0EF; color: #E8453C; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; border-radius: 20px; padding: 4px 12px; margin-bottom: 16px; }
     .hero-h1 { font-family: 'DM Serif Display', serif; font-size: 48px; letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
     .hero-sub { font-size: 16px; color: #6b6b6b; max-width: 520px; margin-bottom: 24px; line-height: 1.6; }
-    .hero-ctas { display: flex; gap: 12px; margin-bottom: 32px; }
+    .hero-ctas { display: flex; gap: 12px; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 48px 24px; }
+    .empty-state-icon { font-size: 64px; line-height: 1; margin-bottom: 16px; }
+    .empty-state h2 { font-family: 'DM Serif Display', serif; font-size: 24px; color: #1a1a1a; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; color: #6b6b6b; max-width: 360px; margin: 0 auto 24px; line-height: 1.6; }
 
     /* Stats bar */
     .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 40px; }
@@ -51,7 +61,7 @@
 
     /* Feed / cards */
     .feed { display: flex; flex-direction: column; gap: 16px; }
-    .card { background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 20px 22px; transition: box-shadow 0.2s; position: relative; }
+    .card { background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 20px 22px; position: relative; }
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.14); }
     .card-top { padding-right: 110px; margin-bottom: 10px; }
     .recruiter-name { font-weight: 600; font-size: 14px; }
@@ -66,15 +76,7 @@
     .badge svg { width: 12px; height: 12px; }
     .b-pending  { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; }
     .b-verified { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
-    .b-community{ background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-    .b-flagged  { background: #fffbeb; color: #b45309; border-color: #fde68a; }
     .b-category { background: #FFF0EF; color: #E8453C; border-color: rgba(232,69,60,0.2); position: absolute; top: 16px; right: 16px; }
-
-    /* Empty state */
-    .empty-state { text-align: center; padding: 48px 24px; }
-    .empty-state-icon { font-size: 64px; line-height: 1; margin-bottom: 16px; }
-    .empty-state h2 { font-family: 'DM Serif Display', serif; font-size: 24px; color: #1a1a1a; margin-bottom: 12px; }
-    .empty-state p { font-family: 'DM Sans', sans-serif; font-size: 14px; color: #6b6b6b; max-width: 360px; margin: 0 auto 24px; line-height: 1.6; }
 
     /* Form */
     .form-wrap { background: var(--surface); padding: 40px 16px 64px; }
@@ -96,10 +98,10 @@
     .privacy-box { display: flex; gap: 8px; align-items: flex-start; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 12px; margin-bottom: 0; }
     .privacy-box p { font-size: 12px; color: #1d4ed8; line-height: 1.5; }
     textarea { resize: none; height: 96px; }
-    .file-note { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
     .submit-note { font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: 8px; }
     .submit-note a { text-decoration: underline; }
     .form-nav { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; }
+    .char-count { font-size: 12px; color: var(--text-secondary); font-weight: normal; }
 
     /* Progress indicator */
     .progress { display: flex; align-items: center; gap: 0; margin-bottom: 24px; }
@@ -112,6 +114,15 @@
     .progress-line.upcoming { background: #d4d4d4; }
     .progress-label { font-size: 12px; color: var(--text-secondary); margin-left: 8px; }
 
+    /* About */
+    .about-page { max-width: 640px; margin: 0 auto; padding: 40px 16px; }
+    .about-page h1 { font-family: 'DM Serif Display', serif; font-size: 30px; margin-bottom: 12px; }
+    .about-intro { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 32px; }
+    .about-cards { display: flex; flex-direction: column; gap: 16px; }
+    .about-card { background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; padding: 20px 22px; }
+    .about-card h2 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .about-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
     /* Footer */
     footer { border-top: 1px solid rgba(0,0,0,0.1); background: #fff; }
     .footer-inner { max-width: 768px; margin: 0 auto; padding: 32px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
@@ -123,301 +134,412 @@
 </head>
 <body>
 
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <a href="#home" class="wordmark">NotMyRecruiter</a>
-    <nav>
-      <a href="#home" class="nav-link active">Browse</a>
-      <a href="#about" class="nav-link">About</a>
-      <a href="#step1" class="btn-primary nav-btn">Report a Recruiter</a>
-    </nav>
-  </div>
-</header>
+<!-- ─── SECTION 1 ─── -->
+<p class="section-label">Section 1 — Home page (/)</p>
+<hr class="section-divider" />
+<div class="section-frame">
 
-<!-- HOME — with submissions -->
-<div id="home" class="page">
-  <div class="hero">
-    <div class="eyebrow-pill">ACCOUNTABILITY FOR CANDIDATES</div>
-    <h1 class="hero-h1">
-      <span style="color:#1a1a1a;">Recruiters who ghost deserve to be&nbsp;</span><em style="color:#E8453C;">remembered.</em>
-    </h1>
-    <p class="hero-sub">
-      A public record of recruiters who couldn't extend basic professional courtesy
-      after your time and effort.
-    </p>
-    <div class="hero-ctas">
-      <a href="#step1" class="btn-primary">Report an incident</a>
-      <a href="#about" class="btn-secondary">How it works</a>
+  <header>
+    <div class="header-inner">
+      <a href="#" class="wordmark">NotMyRecruiter</a>
+      <nav>
+        <a href="#" class="nav-link">Browse</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="btn-primary nav-btn">Report a Recruiter</a>
+      </nav>
     </div>
-    <div class="stats-bar">
-      <div class="stat">
-        <span class="stat-number">47</span>
-        <span class="stat-label">Reports submitted</span>
+  </header>
+
+  <div class="page">
+    <div class="hero">
+      <div class="eyebrow-pill">ACCOUNTABILITY FOR CANDIDATES</div>
+      <h1 class="hero-h1">
+        <span style="color:#1a1a1a;">Recruiters who ghost deserve to be&nbsp;</span><em style="color:#E8453C;">remembered.</em>
+      </h1>
+      <p class="hero-sub">
+        A public record of recruiters who couldn't extend basic professional courtesy
+        after your time and effort.
+      </p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">Report a Recruiter</a>
+        <a href="#" class="btn-secondary">How it works</a>
       </div>
-      <div class="stat">
-        <span class="stat-number">23</span>
-        <span class="stat-label">Companies flagged</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">61%</span>
-        <span class="stat-label">Post-interview ghosts</span>
-      </div>
-      <div class="stat">
-        <span class="stat-number">18 days</span>
-        <span class="stat-label">Avg wait before ghosting</span>
-      </div>
+    </div>
+
+    <div class="empty-state">
+      <div class="empty-state-icon">👻</div>
+      <h2>No reports yet</h2>
+      <p>Reports appear here after the community submits and verifies them. Know a recruiter who ghosted you? Be the first.</p>
+      <a href="#" class="btn-primary">Submit the first report</a>
     </div>
   </div>
 
-  <div class="controls">
-    <div class="chips-wrap">
-      <button class="chip active">All</button>
-      <button class="chip inactive">👻 Ghosted after interview</button>
-      <button class="chip inactive">🤖 Bot rejection only</button>
-      <button class="chip inactive">🚪 Cancelled &amp; disappeared</button>
-      <button class="chip inactive">📵 Cold outreach ghost</button>
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-wordmark">NotMyRecruiter</span>
+      <nav class="footer-nav"><a href="#">Community Standards</a><a href="#">Submit a Report</a></nav>
+      <span class="footer-copy">&copy; 2026 NotMyRecruiter</span>
     </div>
-    <div class="search-wrap">
-      <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
-      <input class="search-input" type="search" placeholder="Search company..." />
-    </div>
-  </div>
+  </footer>
 
-  <div class="feed">
-    <article class="card">
-      <span class="badge b-category">👻 Ghosted</span>
-      <div class="card-top">
-        <div class="recruiter-name">Sarah Chen <span style="font-weight:400;font-size:12px;color:var(--text-secondary);">· Senior Technical Recruiter</span></div>
-        <div class="recruiter-meta">Stripe &middot; Mar 2025</div>
-      </div>
-      <p class="card-summary">Had a great final-round interview with the hiring manager. Sarah confirmed next steps over LinkedIn. Never heard back despite two follow-up messages over three weeks.</p>
-      <div class="card-footer">
-        <div class="card-footer-left">
-          <span class="badge b-verified">
-            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-            Interaction verified
-          </span>
-        </div>
-        <div class="card-footer-right">
-          <span>reported 12 days ago</span>
-          <a href="#" class="flag-btn"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>Flag</a>
-        </div>
-      </div>
-    </article>
-    <article class="card">
-      <span class="badge b-category">🤖 Bot rejection</span>
-      <div class="card-top">
-        <div class="recruiter-name">Marcus Webb</div>
-        <div class="recruiter-meta">Airbnb &middot; Jan 2025</div>
-      </div>
-      <p class="card-summary">Marcus reached out on LinkedIn with a personalized message about a Senior SWE role. I responded, completed a take-home, then received an automated rejection two months later with no human contact.</p>
-      <div class="card-footer">
-        <div class="card-footer-left"><span class="badge b-pending">Pending review</span></div>
-        <div class="card-footer-right"><span>reported 28 days ago</span><a href="#" class="flag-btn"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>Flag</a></div>
-      </div>
-    </article>
-  </div>
-  <p style="text-align:center;font-size:12px;color:var(--text-secondary);margin-top:32px;">2 reports</p>
 </div>
 
-<!-- HOME — empty state -->
-<div class="page" style="padding-top:20px;border-top:1px solid rgba(0,0,0,0.06);">
-  <div class="hero">
-    <div class="eyebrow-pill">ACCOUNTABILITY FOR CANDIDATES</div>
-    <h1 class="hero-h1">
-      <span style="color:#1a1a1a;">Recruiters who ghost deserve to be&nbsp;</span><em style="color:#E8453C;">remembered.</em>
-    </h1>
-    <p class="hero-sub">
-      A public record of recruiters who couldn't extend basic professional courtesy
-      after your time and effort.
-    </p>
-    <div class="hero-ctas">
-      <a href="#step1" class="btn-primary">Report an incident</a>
-      <a href="#about" class="btn-secondary">How it works</a>
+<!-- ─── SECTION 2 ─── -->
+<p class="section-label">Section 2 — Browse page (/browse)</p>
+<hr class="section-divider" />
+<div class="section-frame">
+
+  <header>
+    <div class="header-inner">
+      <a href="#" class="wordmark">NotMyRecruiter</a>
+      <nav>
+        <a href="#" class="nav-link active">Browse</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="btn-primary nav-btn">Report a Recruiter</a>
+      </nav>
     </div>
+  </header>
+
+  <div class="page">
     <div class="stats-bar">
       <div class="stat"><span class="stat-number">—</span><span class="stat-label">Reports submitted</span></div>
       <div class="stat"><span class="stat-number">—</span><span class="stat-label">Companies flagged</span></div>
       <div class="stat"><span class="stat-number">—</span><span class="stat-label">Post-interview ghosts</span></div>
       <div class="stat"><span class="stat-number">—</span><span class="stat-label">Avg wait before ghosting</span></div>
     </div>
-  </div>
-  <div class="controls">
-    <div class="chips-wrap">
-      <button class="chip active">All</button>
-      <button class="chip inactive">👻 Ghosted after interview</button>
-      <button class="chip inactive">🤖 Bot rejection only</button>
-      <button class="chip inactive">🚪 Cancelled &amp; disappeared</button>
-      <button class="chip inactive">📵 Cold outreach ghost</button>
-    </div>
-    <div class="search-wrap">
-      <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
-      <input class="search-input" type="search" placeholder="Search company..." />
-    </div>
-  </div>
-  <div class="empty-state">
-    <div class="empty-state-icon">👻</div>
-    <h2>No reports yet</h2>
-    <p>Reports appear here after the community submits and verifies them. Know a recruiter who ghosted you? Be the first.</p>
-    <a href="#step1" class="btn-primary">Submit the first report</a>
-  </div>
-</div>
 
-<!-- SUBMIT — Step 1 of 4 -->
-<div id="step1" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
-  <div class="form-page">
-    <div class="progress">
-      <div class="progress-dot active"></div>
-      <div class="progress-line upcoming"></div>
-      <div class="progress-dot upcoming"></div>
-      <div class="progress-line upcoming"></div>
-      <div class="progress-dot upcoming"></div>
-      <div class="progress-line upcoming"></div>
-      <div class="progress-dot upcoming"></div>
-      <span class="progress-label">Step 1 of 4</span>
-    </div>
-    <h2 class="form-title">Report a Recruiter</h2>
-    <p class="form-subtitle">Tell us who ghosted you.</p>
-    <div class="form-row form-field">
-      <div><label>Full name *</label><input type="text" placeholder="Jane Smith" /></div>
-      <div><label>Title</label><input type="text" placeholder="Senior Technical Recruiter" /></div>
-    </div>
-    <div class="form-field">
-      <label>LinkedIn URL *</label>
-      <input type="url" placeholder="https://linkedin.com/in/..." />
-      <p class="helper-text">Used as the identity source of truth. Ensures the right person is identified.</p>
-    </div>
-    <div class="form-field" style="margin-bottom:0;">
-      <label>Company name *</label>
-      <input type="text" placeholder="Acme Corp" />
-    </div>
-    <div class="form-nav">
-      <span></span>
-      <a href="#step2" class="btn-primary">Next</a>
-    </div>
-  </div>
-</div>
-
-<!-- SUBMIT — Step 2 of 4 -->
-<div id="step2" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
-  <div class="form-page">
-    <div class="progress">
-      <div class="progress-dot done"></div>
-      <div class="progress-line done"></div>
-      <div class="progress-dot active"></div>
-      <div class="progress-line upcoming"></div>
-      <div class="progress-dot upcoming"></div>
-      <div class="progress-line upcoming"></div>
-      <div class="progress-dot upcoming"></div>
-      <span class="progress-label">Step 2 of 4</span>
-    </div>
-    <h2 class="form-title">Report a Recruiter</h2>
-    <p class="form-subtitle">Tell us what happened and when.</p>
-    <div class="form-row form-field">
-      <div>
-        <label>Month of incident *</label>
-        <select><option>Month…</option><option selected>June</option></select>
+    <div class="controls">
+      <div class="chips-wrap">
+        <button class="chip active">All</button>
+        <button class="chip inactive">👻 Ghosted after interview</button>
+        <button class="chip inactive">🤖 Bot rejection only</button>
+        <button class="chip inactive">🚪 Cancelled &amp; disappeared</button>
+        <button class="chip inactive">📵 Cold outreach ghost</button>
       </div>
-      <div>
-        <label>Year of incident *</label>
-        <select><option selected>2026</option><option>2025</option></select>
+      <div class="search-wrap">
+        <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" type="search" placeholder="Search company..." />
       </div>
     </div>
-    <div class="form-field" style="margin-bottom:0;">
-      <p style="font-size:14px;font-weight:500;margin-bottom:12px;">What happened? *</p>
-      <div class="category-grid">
-        <button type="button" class="category-card selected"><span class="cat-icon">👻</span><span class="cat-label">Ghosted after interview</span><span class="cat-desc">No follow-up after you interviewed</span></button>
-        <button type="button" class="category-card"><span class="cat-icon">🤖</span><span class="cat-label">Bot rejection only</span><span class="cat-desc">Just a form email, no human contact</span></button>
-        <button type="button" class="category-card"><span class="cat-icon">🚪</span><span class="cat-label">Cancelled &amp; disappeared</span><span class="cat-desc">Recruiter cancelled, never followed up</span></button>
-        <button type="button" class="category-card"><span class="cat-icon">📵</span><span class="cat-label">Cold outreach ghost</span><span class="cat-desc">They reached out, then went silent</span></button>
+
+    <div class="feed">
+      <!-- Card 1 -->
+      <article class="card">
+        <span class="badge b-category">👻 Ghosted</span>
+        <div class="card-top">
+          <div class="recruiter-name">Sarah Chen <span style="font-weight:400;font-size:12px;color:var(--text-secondary);">· Senior Technical Recruiter</span></div>
+          <div class="recruiter-meta">Stripe &middot; Mar 2025</div>
+        </div>
+        <p class="card-summary">Had a great final-round interview with the hiring manager. Sarah confirmed next steps over LinkedIn. Never heard back despite two follow-up messages over three weeks.</p>
+        <div class="card-footer">
+          <div class="card-footer-left">
+            <span class="badge b-verified">
+              <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              Interaction verified
+            </span>
+          </div>
+          <div class="card-footer-right">
+            <span>reported 12 days ago</span>
+            <a href="#" class="flag-btn"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>Flag</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card">
+        <span class="badge b-category">🤖 Bot rejection</span>
+        <div class="card-top">
+          <div class="recruiter-name">Marcus Webb</div>
+          <div class="recruiter-meta">Airbnb &middot; Jan 2025</div>
+        </div>
+        <p class="card-summary">Marcus reached out on LinkedIn with a personalized message about a Senior SWE role. I responded, completed a take-home, then received an automated rejection two months later with no human contact.</p>
+        <div class="card-footer">
+          <div class="card-footer-left"><span class="badge b-pending">Pending review</span></div>
+          <div class="card-footer-right">
+            <span>reported 5 days ago</span>
+            <a href="#" class="flag-btn"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>Flag</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-wordmark">NotMyRecruiter</span>
+      <nav class="footer-nav"><a href="#">Community Standards</a><a href="#">Submit a Report</a></nav>
+      <span class="footer-copy">&copy; 2026 NotMyRecruiter</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ─── SECTION 3 ─── -->
+<p class="section-label">Section 3 — Submit step 1 of 4 (/submit)</p>
+<hr class="section-divider" />
+<div class="section-frame">
+
+  <header>
+    <div class="header-inner">
+      <a href="#" class="wordmark">NotMyRecruiter</a>
+      <nav>
+        <a href="#" class="nav-link">Browse</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="btn-primary nav-btn">Report a Recruiter</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="form-wrap">
+    <div class="form-page">
+      <div class="progress">
+        <div class="progress-dot active"></div>
+        <div class="progress-line upcoming"></div>
+        <div class="progress-dot upcoming"></div>
+        <div class="progress-line upcoming"></div>
+        <div class="progress-dot upcoming"></div>
+        <div class="progress-line upcoming"></div>
+        <div class="progress-dot upcoming"></div>
+        <span class="progress-label">Step 1 of 4</span>
+      </div>
+      <h2 class="form-title">Report a Recruiter</h2>
+      <p class="form-subtitle">Who ghosted you?</p>
+      <div class="form-row form-field">
+        <div><label>Full name *</label><input type="text" placeholder="Jane Smith" /></div>
+        <div><label>Title</label><input type="text" placeholder="Senior Technical Recruiter" /></div>
+      </div>
+      <div class="form-field">
+        <label>LinkedIn URL *</label>
+        <input type="url" placeholder="https://linkedin.com/in/..." />
+        <p class="helper-text">Used as the identity source of truth. Ensures the right person is identified.</p>
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label>Company name *</label>
+        <input type="text" placeholder="Acme Corp" />
+      </div>
+      <div class="form-nav">
+        <span></span>
+        <a href="#" class="btn-primary">Next</a>
       </div>
     </div>
-    <div class="form-nav">
-      <a href="#step1" class="btn-secondary">Back</a>
-      <a href="#step3" class="btn-primary">Next</a>
-    </div>
   </div>
+
 </div>
 
-<!-- SUBMIT — Step 3 of 4 -->
-<div id="step3" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
-  <div class="form-page">
-    <div class="progress">
-      <div class="progress-dot done"></div>
-      <div class="progress-line done"></div>
-      <div class="progress-dot done"></div>
-      <div class="progress-line done"></div>
-      <div class="progress-dot active"></div>
-      <div class="progress-line upcoming"></div>
-      <div class="progress-dot upcoming"></div>
-      <span class="progress-label">Step 3 of 4</span>
+<!-- ─── SECTION 4 ─── -->
+<p class="section-label">Section 4 — Submit step 2 of 4</p>
+<hr class="section-divider" />
+<div class="section-frame">
+
+  <header>
+    <div class="header-inner">
+      <a href="#" class="wordmark">NotMyRecruiter</a>
+      <nav>
+        <a href="#" class="nav-link">Browse</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="btn-primary nav-btn">Report a Recruiter</a>
+      </nav>
     </div>
-    <h2 class="form-title">Report a Recruiter</h2>
-    <p class="form-subtitle">Upload evidence of the interaction.</p>
-    <p class="helper-text" style="margin-bottom:16px;">A screenshot is required to verify the interaction occurred before your report can be published.</p>
-    <div class="form-field">
-      <label>Evidence type *</label>
-      <select><option>Select evidence type…</option><option selected>Calendar invite</option></select>
-      <p class="helper-text">An invite from the recruiter or company domain for a scheduled interview.</p>
-    </div>
-    <div class="form-field">
-      <label>Upload file *</label>
-      <div style="border:1px solid rgba(0,0,0,0.12);border-radius:8px;padding:12px 16px;background:#fff;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:10px;"><span style="border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:500;background:#fff;color:var(--text-primary);">Choose file</span><span>No file chosen</span></div>
-      <p class="file-note">Accepted: JPG, PNG, PDF</p>
-    </div>
-    <div class="privacy-box">
-      <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20" style="color:#60a5fa;flex-shrink:0;margin-top:1px;"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-      <p>Your screenshot is reviewed by an admin and permanently deleted after review. It is never stored long-term or displayed publicly.</p>
-    </div>
-    <div class="form-nav">
-      <a href="#step2" class="btn-secondary">Back</a>
-      <a href="#step4" class="btn-primary">Next</a>
+  </header>
+
+  <div class="form-wrap">
+    <div class="form-page">
+      <div class="progress">
+        <div class="progress-dot done"></div>
+        <div class="progress-line done"></div>
+        <div class="progress-dot active"></div>
+        <div class="progress-line upcoming"></div>
+        <div class="progress-dot upcoming"></div>
+        <div class="progress-line upcoming"></div>
+        <div class="progress-dot upcoming"></div>
+        <span class="progress-label">Step 2 of 4</span>
+      </div>
+      <h2 class="form-title">Report a Recruiter</h2>
+      <p class="form-subtitle">What happened?</p>
+      <div class="form-row form-field">
+        <div>
+          <label>Month of incident *</label>
+          <select><option>Month…</option><option selected>March</option></select>
+        </div>
+        <div>
+          <label>Year of incident *</label>
+          <select><option selected>2026</option><option>2025</option></select>
+        </div>
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <p style="font-size:14px;font-weight:500;margin-bottom:12px;">What happened? *</p>
+        <div class="category-grid">
+          <button type="button" class="category-card selected"><span class="cat-icon">👻</span><span class="cat-label">Ghosted after interview</span><span class="cat-desc">No follow-up after you interviewed</span></button>
+          <button type="button" class="category-card"><span class="cat-icon">🤖</span><span class="cat-label">Bot rejection only</span><span class="cat-desc">Just a form email, no human contact</span></button>
+          <button type="button" class="category-card"><span class="cat-icon">🚪</span><span class="cat-label">Cancelled &amp; disappeared</span><span class="cat-desc">Recruiter cancelled, never followed up</span></button>
+          <button type="button" class="category-card"><span class="cat-icon">📵</span><span class="cat-label">Cold outreach ghost</span><span class="cat-desc">They reached out, then went silent</span></button>
+        </div>
+      </div>
+      <div class="form-nav">
+        <a href="#" class="btn-secondary">Back</a>
+        <a href="#" class="btn-primary">Next</a>
+      </div>
     </div>
   </div>
+
 </div>
 
-<!-- SUBMIT — Step 4 of 4 -->
-<div id="step4" class="form-wrap" style="border-top:1px solid rgba(0,0,0,0.06);">
-  <div class="form-page">
-    <div class="progress">
-      <div class="progress-dot done"></div>
-      <div class="progress-line done"></div>
-      <div class="progress-dot done"></div>
-      <div class="progress-line done"></div>
-      <div class="progress-dot done"></div>
-      <div class="progress-line done"></div>
-      <div class="progress-dot active"></div>
-      <span class="progress-label">Step 4 of 4</span>
+<!-- ─── SECTION 5 ─── -->
+<p class="section-label">Section 5 — Submit step 3 of 4</p>
+<hr class="section-divider" />
+<div class="section-frame">
+
+  <header>
+    <div class="header-inner">
+      <a href="#" class="wordmark">NotMyRecruiter</a>
+      <nav>
+        <a href="#" class="nav-link">Browse</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="btn-primary nav-btn">Report a Recruiter</a>
+      </nav>
     </div>
-    <h2 class="form-title">Report a Recruiter</h2>
-    <p class="form-subtitle">Add context and confirm your report.</p>
-    <div class="form-field">
-      <label>Summary * <span style="font-weight:normal;font-size:12px;color:var(--text-secondary);">43/150</span></label>
-      <textarea>Confirmed interview, no follow-up despite two attempts.</textarea>
-      <p class="helper-text">Keep it factual. Avoid names of third parties not involved in the hiring process.</p>
+  </header>
+
+  <div class="form-wrap">
+    <div class="form-page">
+      <div class="progress">
+        <div class="progress-dot done"></div>
+        <div class="progress-line done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-line done"></div>
+        <div class="progress-dot active"></div>
+        <div class="progress-line upcoming"></div>
+        <div class="progress-dot upcoming"></div>
+        <span class="progress-label">Step 3 of 4</span>
+      </div>
+      <h2 class="form-title">Report a Recruiter</h2>
+      <p class="form-subtitle">Verify your experience.</p>
+      <p class="helper-text" style="margin-bottom:16px;">A screenshot is required to verify the interaction occurred before your report can be published.</p>
+      <div class="form-field">
+        <label>Evidence type *</label>
+        <select><option>Select evidence type…</option><option selected>Calendar invite</option></select>
+        <p class="helper-text">An invite from the recruiter or company domain for a scheduled interview.</p>
+      </div>
+      <div class="form-field">
+        <label>Upload file *</label>
+        <div style="border:1px solid rgba(0,0,0,0.12);border-radius:8px;padding:12px 16px;background:#fff;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:10px;"><span style="border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:500;background:#fff;color:var(--text-primary);">Choose file</span><span>No file chosen</span></div>
+        <p class="helper-text">Accepted: JPG, PNG, PDF</p>
+      </div>
+      <div class="privacy-box">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20" style="color:#60a5fa;flex-shrink:0;margin-top:1px;"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        <p>Your screenshot is reviewed by an admin and permanently deleted after review. Never stored long-term or displayed publicly.</p>
+      </div>
+      <div class="form-nav">
+        <a href="#" class="btn-secondary">Back</a>
+        <a href="#" class="btn-primary">Next</a>
+      </div>
     </div>
-    <div class="form-field" style="margin-bottom:0;">
-      <label>Your email *</label>
-      <input type="email" placeholder="you@example.com" />
-      <p class="helper-text">For verification only. Never stored in plaintext or displayed publicly.</p>
-    </div>
-    <div class="form-nav">
-      <a href="#step3" class="btn-secondary">Back</a>
-      <button type="submit" class="btn-primary">Submit report</button>
-    </div>
-    <p class="submit-note">By submitting you agree to our <a href="#">community standards</a>.</p>
   </div>
+
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <span class="footer-wordmark">NotMyRecruiter</span>
-    <nav class="footer-nav"><a href="#">Community Standards</a><a href="#">Submit a Report</a></nav>
-    <span class="footer-copy">&copy; 2026 NotMyRecruiter</span>
+<!-- ─── SECTION 6 ─── -->
+<p class="section-label">Section 6 — Submit step 4 of 4</p>
+<hr class="section-divider" />
+<div class="section-frame">
+
+  <header>
+    <div class="header-inner">
+      <a href="#" class="wordmark">NotMyRecruiter</a>
+      <nav>
+        <a href="#" class="nav-link">Browse</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="btn-primary nav-btn">Report a Recruiter</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="form-wrap">
+    <div class="form-page">
+      <div class="progress">
+        <div class="progress-dot done"></div>
+        <div class="progress-line done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-line done"></div>
+        <div class="progress-dot done"></div>
+        <div class="progress-line done"></div>
+        <div class="progress-dot active"></div>
+        <span class="progress-label">Step 4 of 4</span>
+      </div>
+      <h2 class="form-title">Report a Recruiter</h2>
+      <p class="form-subtitle">Final details.</p>
+      <div class="form-field">
+        <label>Summary * <span class="char-count">0/150</span></label>
+        <textarea placeholder="Describe what happened, factually and briefly."></textarea>
+        <p class="helper-text">Keep it factual. Avoid names of third parties not involved in the hiring process.</p>
+      </div>
+      <div class="form-field" style="margin-bottom:0;">
+        <label>Your email *</label>
+        <input type="email" placeholder="you@example.com" />
+        <p class="helper-text">For verification only. Never stored in plaintext or displayed publicly.</p>
+      </div>
+      <div class="form-nav">
+        <a href="#" class="btn-secondary">Back</a>
+        <button type="submit" class="btn-primary">Submit report</button>
+      </div>
+      <p class="submit-note">By submitting you agree to our <a href="#">community standards</a>.</p>
+    </div>
   </div>
-</footer>
+
+</div>
+
+<!-- ─── SECTION 7 ─── -->
+<p class="section-label">Section 7 — About page (/about)</p>
+<hr class="section-divider" />
+<div class="section-frame">
+
+  <header>
+    <div class="header-inner">
+      <a href="#" class="wordmark">NotMyRecruiter</a>
+      <nav>
+        <a href="#" class="nav-link">Browse</a>
+        <a href="#" class="nav-link active">About</a>
+        <a href="#" class="btn-primary nav-btn">Report a Recruiter</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="about-page">
+    <h1>How this works</h1>
+    <p class="about-intro">
+      NotMyRecruiter is a community-maintained accountability record for recruiter conduct.
+      It exists because candidates invest significant time, energy, and professional
+      credibility in the interview process — and when recruiters go silent after that
+      investment, there is currently no accountability mechanism. This platform is not
+      a place to vent. It is a factual record of professional conduct.
+    </p>
+    <div class="about-cards">
+      <div class="about-card">
+        <h2>What this platform is</h2>
+        <p>Recruiters are professionals acting in a professional capacity. When a candidate completes an interview, the minimum standard of professional courtesy is a response — even a brief one. This platform documents cases where that standard was not met. Every submission is anonymous. Every recruiter is identified by their public LinkedIn profile only.</p>
+      </div>
+      <div class="about-card">
+        <h2>What qualifies as a reportable incident</h2>
+        <p>You completed one or more interviews and received no follow-up after 14 or more days. A recruiter who initiated contact with you went silent after you responded. A recruiter cancelled a scheduled interview and never rescheduled or acknowledged your follow-up. You received only an automated rejection with no human follow-up after a final-round interview.</p>
+      </div>
+      <div class="about-card">
+        <h2>What does not qualify</h2>
+        <p>A recruiter declining to provide feedback on your application or interview performance. A rejection delivered promptly and professionally, even if disappointing. Any conduct that occurred less than 14 days ago. Anything that cannot be characterized as professional conduct — personal grievances, compensation disputes, or matters unrelated to recruiter communication.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-wordmark">NotMyRecruiter</span>
+      <nav class="footer-nav"><a href="#">Community Standards</a><a href="#">Submit a Report</a></nav>
+      <span class="footer-copy">&copy; 2026 NotMyRecruiter</span>
+    </div>
+  </footer>
+
+</div>
+
+<div style="height:64px;"></div>
 
 </body>
 </html>
