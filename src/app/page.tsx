@@ -1,9 +1,63 @@
 import { Suspense } from 'react'
+import Link from 'next/link'
 import FeedContent from '@/components/feed/FeedContent'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 
 export const revalidate = 60  // ISR every 60s
 
-export default function HomePage() {
+async function fetchStats() {
+  const supabase = createServerSupabaseClient()
+
+  const { data } = await supabase
+    .from('submissions')
+    .select('company_id, category, created_at, interview_date')
+    .eq('status', 'published')
+
+  const rows = data ?? []
+  const total = rows.length
+
+  const companies = new Set(rows.map((r) => r.company_id)).size
+
+  const ghosts = rows.filter((r) => r.category === 'ghosted_after_interview').length
+  const ghostPct = total > 0 ? Math.round((ghosts * 100) / total) : null
+
+  const waitDays = rows
+    .map((r) => {
+      const submitted = new Date(r.created_at).getTime()
+      const incident = new Date(r.interview_date).getTime()
+      return (submitted - incident) / (1000 * 60 * 60 * 24)
+    })
+    .filter((d) => d >= 0)
+  const avgWait =
+    waitDays.length > 0
+      ? Math.round(waitDays.reduce((a, b) => a + b, 0) / waitDays.length)
+      : null
+
+  return { total, companies, ghostPct, avgWait }
+}
+
+export default async function HomePage() {
+  const stats = await fetchStats()
+
+  const STATS = [
+    {
+      value: stats.total > 0 ? stats.total.toLocaleString() : '—',
+      label: 'Reports submitted',
+    },
+    {
+      value: stats.companies > 0 ? stats.companies.toLocaleString() : '—',
+      label: 'Companies flagged',
+    },
+    {
+      value: stats.ghostPct != null ? `${stats.ghostPct}%` : '—',
+      label: 'Post-interview ghosts',
+    },
+    {
+      value: stats.avgWait != null ? `${stats.avgWait} days` : '—',
+      label: 'Avg wait before ghosting',
+    },
+  ]
+
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       {/* Hero */}
@@ -33,25 +87,30 @@ export default function HomePage() {
         </h1>
 
         {/* Subtext */}
-        <p className="font-sans mb-8 max-w-xl" style={{ fontSize: '16px', color: '#6b6b6b' }}>
+        <p className="font-sans mb-6 max-w-xl" style={{ fontSize: '16px', color: '#6b6b6b' }}>
           A public record of recruiters who couldn&apos;t extend basic professional courtesy
           after your time and effort.
         </p>
 
-        {/* Stats bar */}
+        {/* Hero CTAs */}
+        <div className="flex gap-3 mb-8">
+          <Link href="/submit" className="btn-primary">
+            Report an incident
+          </Link>
+          <Link href="/about" className="btn-secondary">
+            How it works
+          </Link>
+        </div>
+
+        {/* Stats bar — live from Supabase, "—" when zero */}
         <div className="grid grid-cols-4 gap-4 py-6 border-y border-[rgba(0,0,0,0.08)]">
-          {[
-            { number: '1,284', label: 'Reports submitted' },
-            { number: '392',   label: 'Companies flagged' },
-            { number: '78%',   label: 'Post-interview ghosts' },
-            { number: '14 days', label: 'Avg wait before ghosting' },
-          ].map((stat) => (
+          {STATS.map((stat) => (
             <div key={stat.label} className="text-center">
               <div
                 className="font-serif"
                 style={{ fontSize: '28px', color: '#E8453C', lineHeight: 1 }}
               >
-                {stat.number}
+                {stat.value}
               </div>
               <div className="text-xs mt-1" style={{ color: '#6b6b6b' }}>
                 {stat.label}

@@ -81,17 +81,38 @@ export default function FeedContent() {
           ))}
         </div>
       ) : submissions.length === 0 ? (
-        <div className="text-center py-16 text-[var(--text-secondary)]">
-          <div className="text-3xl mb-3">🔍</div>
-          <p className="text-sm">
-            {search ? 'No reports match your search.' : 'No published reports yet.'}
-          </p>
-          {!search && (
-            <a href="/submit" className="btn-primary inline-block mt-4">
-              Be the first to report
+        search ? (
+          <div className="text-center py-16 text-[var(--text-secondary)]">
+            <div className="text-3xl mb-3">🔍</div>
+            <p className="text-sm">No reports match your search.</p>
+          </div>
+        ) : (
+          <div className="text-center" style={{ padding: '48px 24px' }}>
+            <div style={{ fontSize: '64px', lineHeight: 1, marginBottom: '16px' }}>👻</div>
+            <h2
+              className="font-serif"
+              style={{ fontSize: '24px', color: '#1a1a1a', marginBottom: '12px' }}
+            >
+              No reports yet
+            </h2>
+            <p
+              className="font-sans mx-auto"
+              style={{
+                fontSize: '14px',
+                color: '#6b6b6b',
+                maxWidth: '360px',
+                lineHeight: 1.6,
+                marginBottom: '24px',
+              }}
+            >
+              Reports appear here after the community submits and verifies them.
+              Know a recruiter who ghosted you? Be the first.
+            </p>
+            <a href="/submit" className="btn-primary inline-block">
+              Submit the first report
             </a>
-          )}
-        </div>
+          </div>
+        )
       ) : (
         <div className="space-y-4">
           {submissions.map((s) => (
