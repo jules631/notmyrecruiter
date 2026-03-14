@@ -8,77 +8,36 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
   <style>
-    /* ── Design tokens ─────────────────────────────────────── */
-    :root {
-      --accent:         #E8453C;
-      --accent-hover:   #d03a31;
-      --surface:        #f9f8f5;
-      --card-border:    #e5e3de;
-      --text-primary:   #1a1a1a;
-      --text-secondary: #6b6b6b;
-      --font-serif:     'DM Serif Display', Georgia, serif;
-      --font-sans:      'DM Sans', system-ui, sans-serif;
-    }
-
-    /* ── Reset ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --accent: #E8453C;
+      --accent-hover: #d03a31;
+      --surface: #f9f8f5;
+      --card-border: rgba(0,0,0,0.1);
+      --text-primary: #1a1a1a;
+      --text-secondary: #6b6b6b;
+    }
+
     body {
-      font-family: var(--font-sans);
+      font-family: 'DM Sans', system-ui, sans-serif;
       background: var(--surface);
       color: var(--text-primary);
       -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
     }
 
-    h1, h2, h3 { font-family: var(--font-serif); font-weight: 400; }
+    h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; }
 
-    a { color: inherit; text-decoration: none; }
-
-    /* ── Preview chrome ────────────────────────────────────── */
-    .preview-bar {
-      background: #1a1a1a;
-      color: #aaa;
-      font-size: 11px;
-      font-family: var(--font-sans);
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .preview-bar span { color: #fff; font-weight: 600; letter-spacing: .02em; }
-    .preview-nav { display: flex; gap: 4px; margin-left: auto; }
-    .preview-nav button {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      border: 1px solid #333;
-      background: transparent;
-      color: #aaa;
-      cursor: pointer;
-      transition: all .15s;
-    }
-    .preview-nav button:hover { background: #2a2a2a; color: #fff; }
-    .preview-nav button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-    /* ── Pages ─────────────────────────────────────────────── */
-    .page { display: none; }
-    .page.active { display: block; }
-
-    /* ── Header ────────────────────────────────────────────── */
-    .site-header {
-      border-bottom: 1px solid var(--card-border);
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid rgba(0,0,0,0.1);
       background: #fff;
       position: sticky;
-      top: 33px; /* below preview bar */
+      top: 0;
       z-index: 50;
     }
-    .site-header-inner {
-      max-width: 672px;
+    .header-inner {
+      max-width: 768px;
       margin: 0 auto;
       padding: 0 16px;
       height: 56px;
@@ -87,205 +46,321 @@
       justify-content: space-between;
     }
     .wordmark {
-      font-family: var(--font-serif);
+      font-family: 'DM Serif Display', serif;
       font-size: 20px;
       color: var(--text-primary);
+      text-decoration: none;
     }
-    .header-nav { display: flex; align-items: center; gap: 4px; }
+    .wordmark:hover { color: var(--accent); }
+    nav { display: flex; align-items: center; gap: 4px; }
     .nav-link {
-      font-size: 13px;
+      font-size: 14px;
       padding: 6px 12px;
       border-radius: 6px;
+      text-decoration: none;
       color: var(--text-secondary);
-      transition: color .15s;
+      transition: color 0.15s;
     }
     .nav-link:hover { color: var(--text-primary); }
-    .nav-link.active-nav { color: var(--accent); font-weight: 500; }
+    .nav-link.active { color: var(--accent); font-weight: 500; }
 
-    /* ── Buttons ───────────────────────────────────────────── */
+    /* Buttons */
     .btn-primary {
       background: var(--accent);
       color: #fff;
-      font-family: var(--font-sans);
-      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 500;
-      padding: 8px 18px;
+      font-size: 14px;
+      padding: 10px 20px;
       border-radius: 8px;
       border: none;
       cursor: pointer;
-      transition: background .15s;
+      text-decoration: none;
       display: inline-block;
+      transition: background 0.15s;
+      margin-left: 8px;
     }
     .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary.w-full { display: block; width: 100%; text-align: center; margin-left: 0; }
+
     .btn-secondary {
       background: #fff;
       color: var(--text-primary);
-      font-family: var(--font-sans);
-      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 500;
-      padding: 8px 18px;
+      font-size: 14px;
+      padding: 10px 20px;
       border-radius: 8px;
-      border: 1px solid var(--card-border);
+      border: 1px solid rgba(0,0,0,0.1);
       cursor: pointer;
-      transition: background .15s;
+      transition: background 0.15s;
       display: inline-block;
     }
-    .btn-secondary:hover { background: #f5f5f5; }
+    .btn-secondary:hover { background: #f9f8f5; }
 
-    /* ── Card ──────────────────────────────────────────────── */
-    .card {
-      background: #fff;
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 20px;
-      transition: box-shadow .2s;
-    }
-    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.10); }
+    /* ── Hero ── */
+    .hero { margin-bottom: 40px; }
 
-    /* ── Chips ─────────────────────────────────────────────── */
-    .chip {
+    .eyebrow-pill {
       display: inline-flex;
       align-items: center;
-      padding: 6px 14px;
-      border-radius: 999px;
-      font-size: 13px;
+      background: #FFF0EF;
+      color: #E8453C;
+      font-size: 12px;
       font-weight: 500;
-      border: 1px solid var(--card-border);
-      cursor: pointer;
-      transition: all .15s;
-      font-family: var(--font-sans);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 16px;
     }
-    .chip-active { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .chip-inactive { background: #fff; color: var(--text-secondary); }
-    .chip-inactive:hover { border-color: #999; }
 
-    /* ── Form inputs ───────────────────────────────────────── */
-    .input {
-      width: 100%;
+    .hero-h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 48px;
+      color: #1a1a1a;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero-h1 .accent { color: #E8453C; }
+
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      color: #6b6b6b;
+      max-width: 480px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 24px 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 40px;
+    }
+    .stat { text-align: center; }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      color: #E8453C;
+      line-height: 1;
+      display: block;
+    }
+    .stat-label { font-size: 12px; color: #6b6b6b; margin-top: 4px; display: block; }
+
+    /* Filter area */
+    .feed-controls { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+    .search-bar {
+      flex: 1;
+      min-width: 200px;
       padding: 10px 16px;
-      border: 1px solid var(--card-border);
+      border: 1px solid rgba(0,0,0,0.1);
       border-radius: 8px;
-      font-size: 13px;
-      font-family: var(--font-sans);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
       color: var(--text-primary);
       background: #fff;
-      transition: border-color .15s, box-shadow .15s;
       outline: none;
     }
-    .input::placeholder { color: var(--text-secondary); }
-    .input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(232,69,60,.12);
+    .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,69,60,0.15); }
+
+    .chip {
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
     }
-    textarea.input { resize: none; }
-    .label {
+    .chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+    .chip.inactive { background: #fff; color: var(--text-secondary); }
+    .chip.inactive:hover { border-color: #999; }
+
+    /* ── Feed Cards ── */
+    .feed { display: flex; flex-direction: column; gap: 16px; }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 20px 22px;
+      transition: box-shadow 0.2s ease;
+      position: relative;
+    }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.14); }
+
+    .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-right: 112px; }
+    .recruiter-name { font-weight: 600; font-size: 14px; color: var(--text-primary); }
+    .recruiter-title { font-size: 12px; color: var(--text-secondary); }
+    .company-line { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    .card-summary { font-size: 14px; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; }
+
+    .card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .card-footer-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .card-footer-right { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); }
+
+    .flag-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .card:hover .flag-btn { opacity: 1; }
+    .flag-btn:hover { color: var(--accent); }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      border: 1px solid;
+    }
+    .badge-pending { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; }
+    .badge-verified { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+    .badge-community { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .badge-flagged { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+    .badge-rebuttal { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .badge-category {
+      background: #FFF0EF;
+      color: #E8453C;
+      border-color: rgba(232,69,60,0.2);
+      position: absolute;
+      top: 16px;
+      right: 16px;
+    }
+    .badge svg { width: 12px; height: 12px; }
+
+    /* ── Submission Form ── */
+    .form-wrap { background: var(--surface); padding: 40px 16px; }
+    .form-page { background: #fff; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); padding: 32px; max-width: 560px; margin: 0 auto; }
+
+    form { display: flex; flex-direction: column; gap: 24px; }
+
+    fieldset { border: none; padding: 0; }
+    legend { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; display: block; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-col { display: flex; flex-direction: column; }
+
+    label {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 500;
       color: var(--text-primary);
       margin-bottom: 6px;
     }
 
-    /* ── Badges ────────────────────────────────────────────── */
-    .badge-flagged {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 500;
-      background: #fffbeb;
-      color: #b45309;
-      border: 1px solid #fde68a;
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-    .badge-rebuttal {
-      display: inline-flex;
-      align-items: center;
-      font-size: 11px;
-      font-weight: 500;
-      background: #eff6ff;
-      color: #1d4ed8;
-      border: 1px solid #bfdbfe;
-      padding: 2px 8px;
-      border-radius: 999px;
-    }
-
-    /* ── Search bar ────────────────────────────────────────── */
-    .search-wrap { position: relative; }
-    .search-wrap svg {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-secondary);
-      pointer-events: none;
-      width: 15px;
-      height: 15px;
-    }
-    .search-wrap .input { padding-left: 40px; }
-
-    /* ── Layout helpers ────────────────────────────────────── */
-    .page-content { max-width: 672px; margin: 0 auto; padding: 40px 16px; }
-    .page-content-wide { max-width: 672px; margin: 0 auto; padding: 40px 16px; }
-    .stack { display: flex; flex-direction: column; }
-    .gap-4 { gap: 16px; }
-    .gap-6 { gap: 24px; }
-    .gap-3 { gap: 12px; }
-    .gap-2 { gap: 8px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .mb-2 { margin-bottom: 8px; }
-    .mb-3 { margin-bottom: 12px; }
-    .mb-4 { margin-bottom: 16px; }
-    .mb-6 { margin-bottom: 24px; }
-    .mb-8 { margin-bottom: 32px; }
-    .mb-10 { margin-bottom: 40px; }
-    .mt-3 { margin-top: 12px; }
-    .mt-4 { margin-top: 16px; }
-    .mt-6 { margin-top: 24px; }
-    .mt-10 { margin-top: 40px; }
-    .flex { display: flex; }
-    .flex-col { flex-direction: column; }
-    .items-center { align-items: center; }
-    .items-start { align-items: flex-start; }
-    .justify-between { justify-content: space-between; }
-    .flex-wrap { flex-wrap: wrap; }
-    .shrink-0 { flex-shrink: 0; }
-    .flex-1 { flex: 1; }
-    .w-full { width: 100%; }
-    .text-center { text-align: center; }
-
-    /* ── Typography ────────────────────────────────────────── */
-    .text-xs   { font-size: 11px; }
-    .text-sm   { font-size: 13px; }
-    .text-base { font-size: 15px; }
-    .text-lg   { font-size: 18px; }
-    .text-xl   { font-size: 20px; }
-    .text-2xl  { font-size: 24px; }
-    .text-3xl  { font-size: 30px; }
-    .text-4xl  { font-size: 36px; }
-    .leading-relaxed { line-height: 1.65; }
-    .font-medium { font-weight: 500; }
-    .font-semibold { font-weight: 600; }
-    .italic { font-style: italic; }
-    .uppercase { text-transform: uppercase; }
-    .tracking-wide { letter-spacing: .06em; }
-    .text-primary { color: var(--text-primary); }
-    .text-secondary { color: var(--text-secondary); }
-    .text-accent { color: var(--accent); }
-    .whitespace-pre-line { white-space: pre-line; }
-
-    /* ── Divider ───────────────────────────────────────────── */
-    hr { border: none; border-top: 1px solid var(--card-border); }
-
-    /* ── Footer ────────────────────────────────────────────── */
-    .site-footer {
-      border-top: 1px solid var(--card-border);
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 16px;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-primary);
       background: #fff;
-      margin-top: 64px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .site-footer-inner {
-      max-width: 672px;
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(232,69,60,0.15);
+    }
+    ::placeholder { color: var(--text-secondary); }
+
+    .helper-text { font-size: 12px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.1); }
+
+    /* Category cards */
+    .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .category-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+    .category-card:hover { border-color: rgba(0,0,0,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .category-card.selected { border-color: var(--accent); background: rgba(232,69,60,0.04); box-shadow: 0 0 0 1px rgba(232,69,60,0.3); }
+    .category-icon { font-size: 24px; margin-bottom: 6px; }
+    .category-label { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 2px; }
+    .category-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+
+    /* Privacy box */
+    .privacy-box {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .privacy-box p { font-size: 12px; color: #1d4ed8; line-height: 1.5; }
+
+    textarea { resize: none; height: 96px; }
+
+    .file-note { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+    .submit-note { font-size: 12px; color: var(--text-secondary); text-align: center; }
+    .submit-note a { text-decoration: underline; }
+
+    /* Preview divider */
+    .preview-divider {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #aaa;
+      padding: 32px 0 8px;
+    }
+    .preview-divider::before, .preview-divider::after {
+      content: '';
+      display: inline-block;
+      width: 60px;
+      height: 1px;
+      background: #ddd;
+      vertical-align: middle;
+      margin: 0 12px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(0,0,0,0.1);
+      background: #fff;
+      margin-top: 0;
+    }
+    .footer-inner {
+      max-width: 768px;
       margin: 0 auto;
       padding: 32px 16px;
       display: flex;
@@ -294,534 +369,362 @@
       gap: 16px;
       flex-wrap: wrap;
     }
+    .footer-wordmark { font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--text-secondary); }
     .footer-nav { display: flex; gap: 20px; }
-    .footer-nav a { font-size: 13px; color: var(--text-secondary); transition: color .15s; }
+    .footer-nav a { font-size: 14px; color: var(--text-secondary); text-decoration: none; }
     .footer-nav a:hover { color: var(--text-primary); }
-
-    /* ── Feed card hover reveal ────────────────────────────── */
-    .feed-card-group .dispute-link { opacity: 0; transition: opacity .2s; }
-    .feed-card-group:hover .dispute-link { opacity: 1; }
-
-    /* ── Callout box ───────────────────────────────────────── */
-    .callout {
-      padding: 20px;
-      background: rgba(232,69,60,.04);
-      border: 1px solid rgba(232,69,60,.18);
-      border-radius: 10px;
-    }
-
-    /* ── Tier selector buttons ─────────────────────────────── */
-    .tier-btn {
-      text-align: left;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid var(--card-border);
-      background: #fff;
-      cursor: pointer;
-      font-family: var(--font-sans);
-      transition: all .15s;
-      flex: 1;
-    }
-    .tier-btn:hover { border-color: #aaa; }
-    .tier-btn.selected {
-      border-color: var(--accent);
-      background: rgba(232,69,60,.04);
-      color: var(--accent);
-    }
-    .tier-btn .tier-label { font-size: 13px; font-weight: 500; display: block; margin-bottom: 2px; }
-    .tier-btn .tier-sub   { font-size: 11px; opacity: .7; display: block; }
-
-    /* ── Error state ───────────────────────────────────────── */
-    .error-box {
-      font-size: 13px;
-      color: var(--accent);
-      background: rgba(232,69,60,.05);
-      border: 1px solid rgba(232,69,60,.2);
-      border-radius: 8px;
-      padding: 12px 16px;
-    }
-
-    /* ── About section separators ──────────────────────────── */
-    .about-section-num {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 6px;
-    }
-
-    /* ── Scrollable preview wrapper ────────────────────────── */
-    .scroll-wrap { height: calc(100vh - 33px); overflow-y: auto; }
+    .footer-copy { font-size: 12px; color: var(--text-secondary); }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════
-     PREVIEW BAR
-═══════════════════════════════════════════════════════════ -->
-<div class="preview-bar">
-  <span>NotMyRecruiter</span>
-  <span style="color:#555">— static UI preview</span>
-  <nav class="preview-nav">
-    <button class="active" onclick="showPage('feed', this)">/ Feed</button>
-    <button onclick="showPage('submit', this)">/submit</button>
-    <button onclick="showPage('about', this)">/about</button>
-  </nav>
-</div>
-
-<div class="scroll-wrap">
-
-<!-- ═══════════════════════════════════════════════════════════
-     SHARED HEADER
-═══════════════════════════════════════════════════════════ -->
-<header class="site-header">
-  <div class="site-header-inner">
-    <span class="wordmark">NotMyRecruiter</span>
-    <nav class="header-nav">
-      <a class="nav-link" href="#">Standards</a>
-      <button class="btn-primary" style="margin-left:8px">Report a recruiter</button>
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="wordmark">NotMyRecruiter</a>
+    <nav>
+      <a href="#home" class="nav-link active">Browse</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#submit" class="btn-primary">Report an Incident</a>
     </nav>
   </div>
 </header>
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     PAGE: FEED  /
-═══════════════════════════════════════════════════════════ -->
-<div id="page-feed" class="page active">
-<main class="page-content">
+<!-- ═══════════════════════ HOME PAGE ════════════════════════════ -->
+<div id="home" style="max-width:768px; margin:0 auto; padding:40px 16px;">
 
   <!-- Hero -->
-  <div class="mb-8">
-    <h1 class="text-4xl text-primary mb-2" style="line-height:1.15">
+  <div class="hero">
+    <div class="eyebrow-pill">Community-driven accountability</div>
+
+    <h1 class="hero-h1">
       Recruiter Accountability,<br>
-      <span class="text-accent">Community-Driven.</span>
+      <span class="accent">Community-Driven.</span>
     </h1>
-    <p class="text-secondary text-base leading-relaxed mt-3" style="max-width:480px">
+
+    <p class="hero-sub">
       Real reports from real candidates. When recruiters ghost you after interviews,
       the community should know.
     </p>
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-number">2.4k</span>
+        <span class="stat-label">Reports filed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">89%</span>
+        <span class="stat-label">Verified reports</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">14d</span>
+        <span class="stat-label">Avg. review time</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">340</span>
+        <span class="stat-label">Companies tracked</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Controls -->
-  <div class="flex gap-3 mb-6 flex-wrap items-center">
-    <div class="search-wrap flex-1" style="min-width:220px">
-      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
-      </svg>
-      <input class="input" placeholder="Search recruiter, company, or role…" />
-    </div>
-    <div class="flex gap-2 flex-wrap">
-      <button class="chip chip-active" onclick="setChip(this)">Recent</button>
-      <button class="chip chip-inactive" onclick="setChip(this)">Most flagged</button>
-      <button class="chip chip-inactive" onclick="setChip(this)">Disputed</button>
-    </div>
+  <!-- Feed controls -->
+  <div class="feed-controls">
+    <input class="search-bar" type="text" placeholder="Search by recruiter, company, or summary…" />
+    <button class="chip active">Recent</button>
+    <button class="chip inactive">Most flagged</button>
+    <button class="chip inactive">Disputed</button>
   </div>
 
   <!-- Feed cards -->
-  <div class="stack gap-4">
+  <div class="feed">
 
-    <!-- Card 1 — normal -->
-    <article class="card feed-card-group">
-      <div class="flex items-start justify-between gap-3 mb-3">
+    <!-- Card 1: Ghosted, Interaction verified -->
+    <article class="card">
+      <span class="badge badge-category">👻 Ghosted</span>
+      <div class="card-top">
         <div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-semibold text-sm text-primary">Sarah Chen</span>
-            <span class="text-xs text-secondary">Senior Technical Recruiter</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+            <span class="recruiter-name">Sarah Chen</span>
+            <span class="recruiter-title">Senior Technical Recruiter</span>
           </div>
-          <div class="text-xs text-secondary mt-1">
-            Stripe &middot; <span class="italic">Staff Software Engineer</span>
-          </div>
-        </div>
-        <div class="flex gap-2 shrink-0">
-          <span class="badge-rebuttal">rebuttal</span>
+          <div class="company-line">Stripe &middot; Mar 2025</div>
         </div>
       </div>
-      <p class="text-sm text-primary leading-relaxed mb-4">
-        Completed 4 rounds including a final system design with VP Eng. Radio silence for 6 weeks. No rejection, no update. Recruiter still active on LinkedIn.
-      </p>
-      <div class="flex items-center justify-between text-xs text-secondary">
-        <span>Interview: Aug 14, 2025 &middot; reported 22 days ago</span>
-        <a href="#" class="dispute-link text-secondary" style="transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">Dispute</a>
-      </div>
-    </article>
-
-    <!-- Card 2 — flagged -->
-    <article class="card feed-card-group">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-semibold text-sm text-primary">Marcus Webb</span>
-            <span class="text-xs text-secondary">Talent Acquisition Lead</span>
-          </div>
-          <div class="text-xs text-secondary mt-1">
-            Figma &middot; <span class="italic">Product Designer, Growth</span>
-          </div>
-        </div>
-        <div class="flex gap-2 shrink-0">
-          <span class="badge-flagged">
-            <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10l-1.5 2.5L16 8H6a1 1 0 00-1 1v7H3V6z" clip-rule="evenodd"/></svg>
-            7
+      <p class="card-summary">Had a great final-round interview with the hiring manager. Sarah confirmed next steps over LinkedIn. Never heard back despite two follow-up messages over the next three weeks.</p>
+      <div class="card-footer">
+        <div class="card-footer-left">
+          <span class="badge badge-verified">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            Interaction verified
           </span>
         </div>
-      </div>
-      <p class="text-sm text-primary leading-relaxed mb-4">
-        Recruiter reached out cold, scheduled a screen, then cancelled 30 min before. Never replied to two follow-up emails over 3 weeks.
-      </p>
-      <div class="flex items-center justify-between text-xs text-secondary">
-        <span>Interview: Sep 3, 2025 &middot; reported 8 days ago</span>
-        <a href="#" class="dispute-link text-secondary" style="transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">Dispute</a>
+        <div class="card-footer-right">
+          <span>reported 12 days ago</span>
+          <a href="#" class="flag-btn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+            Flag
+          </a>
+        </div>
       </div>
     </article>
 
-    <!-- Card 3 — normal -->
-    <article class="card feed-card-group">
-      <div class="flex items-start justify-between gap-3 mb-3">
+    <!-- Card 2: Bot rejection, Pending, flagged -->
+    <article class="card">
+      <span class="badge badge-category">🤖 Bot rejection</span>
+      <div class="card-top">
         <div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-semibold text-sm text-primary">Priya Nair</span>
-            <span class="text-xs text-secondary">University Recruiter</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="recruiter-name">Marcus Webb</span>
           </div>
-          <div class="text-xs text-secondary mt-1">
-            Coinbase &middot; <span class="italic">Software Engineer, New Grad</span>
-          </div>
+          <div class="company-line">Airbnb &middot; Jan 2025</div>
         </div>
       </div>
-      <p class="text-sm text-primary leading-relaxed mb-4">
-        Final round completed. Was told decision in 5 business days. 3 follow-ups over 6 weeks, all ignored. Position was reposted while waiting.
-      </p>
-      <div class="flex items-center justify-between text-xs text-secondary">
-        <span>Interview: Jul 29, 2025 &middot; reported 45 days ago</span>
-        <a href="#" class="dispute-link text-secondary" style="transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">Dispute</a>
-      </div>
-    </article>
-
-    <!-- Card 4 — flagged + rebuttal -->
-    <article class="card feed-card-group">
-      <div class="flex items-start justify-between gap-3 mb-3">
-        <div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-semibold text-sm text-primary">James Okafor</span>
-            <span class="text-xs text-secondary">Recruiter</span>
-          </div>
-          <div class="text-xs text-secondary mt-1">
-            Anthropic &middot; <span class="italic">Research Engineer</span>
-          </div>
-        </div>
-        <div class="flex gap-2 shrink-0">
-          <span class="badge-flagged">
-            <svg width="10" height="10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10l-1.5 2.5L16 8H6a1 1 0 00-1 1v7H3V6z" clip-rule="evenodd"/></svg>
-            3
+      <p class="card-summary">Marcus reached out on LinkedIn with a personalized message about a Senior SWE role. I responded, completed a take-home, then received an automated rejection two months later with no human contact.</p>
+      <div class="card-footer">
+        <div class="card-footer-left">
+          <span class="badge badge-pending">Pending review</span>
+          <span class="badge badge-flagged">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10l-1.5 2.5L16 8H6a1 1 0 00-1 1v7H3V6z" clip-rule="evenodd"/></svg>
+            4
           </span>
-          <span class="badge-rebuttal">rebuttal</span>
+        </div>
+        <div class="card-footer-right">
+          <span>reported 28 days ago</span>
+          <a href="#" class="flag-btn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+            Flag
+          </a>
         </div>
       </div>
-      <p class="text-sm text-primary leading-relaxed mb-4">
-        Verbal offer extended on a Thursday. By Monday the recruiter stopped responding. No written offer ever materialized. Discovered role was quietly cancelled.
-      </p>
-      <div class="flex items-center justify-between text-xs text-secondary">
-        <span>Interview: Oct 1, 2025 &middot; reported 16 days ago</span>
-        <a href="#" class="dispute-link text-secondary" style="transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">Dispute</a>
+    </article>
+
+    <!-- Card 3: Cold ghost, Follow-up verified, rebuttal -->
+    <article class="card">
+      <span class="badge badge-category">📵 Cold ghost</span>
+      <div class="card-top">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="recruiter-name">Priya Nair</span>
+            <span class="recruiter-title">Talent Acquisition Lead</span>
+          </div>
+          <div class="company-line">Figma &middot; Nov 2024</div>
+        </div>
+      </div>
+      <p class="card-summary">Priya sent a cold InMail about a product design role and asked me to send my portfolio. I did within 24 hours. Never received a response despite two follow-ups over 6 weeks.</p>
+      <div class="card-footer">
+        <div class="card-footer-left">
+          <span class="badge badge-verified">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Follow-up verified
+          </span>
+          <span class="badge badge-rebuttal">rebuttal</span>
+        </div>
+        <div class="card-footer-right">
+          <span>reported 45 days ago</span>
+          <a href="#" class="flag-btn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+            Flag
+          </a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Card 4: Cancelled, Community verified -->
+    <article class="card">
+      <span class="badge badge-category">🚪 Cancelled</span>
+      <div class="card-top">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="recruiter-name">Jordan Kim</span>
+            <span class="recruiter-title">Engineering Recruiter</span>
+          </div>
+          <div class="company-line">Vercel &middot; Aug 2024</div>
+        </div>
+      </div>
+      <p class="card-summary">Jordan cancelled the final interview 30 minutes before it was scheduled with no explanation. Follow-up emails and LinkedIn messages went unanswered for over two months.</p>
+      <div class="card-footer">
+        <div class="card-footer-left">
+          <span class="badge badge-community">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
+            Community verified
+          </span>
+        </div>
+        <div class="card-footer-right">
+          <span>reported 91 days ago</span>
+          <a href="#" class="flag-btn">
+            <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"/></svg>
+            Flag
+          </a>
+        </div>
       </div>
     </article>
 
   </div>
 
-  <p class="text-center text-xs text-secondary mt-8">4 reports</p>
+  <p style="text-align:center;font-size:12px;color:var(--text-secondary);margin-top:32px;">4 reports</p>
+</div>
 
-</main>
 
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="site-footer-inner">
-    <span class="font-semibold text-sm text-secondary" style="font-family:var(--font-serif)">NotMyRecruiter</span>
+<!-- ══════════════════════ SUBMIT PAGE ═══════════════════════════ -->
+<div class="preview-divider">Submit page</div>
+
+<div id="submit" class="form-wrap">
+  <div class="form-page">
+    <h2 style="font-size:22px;margin-bottom:4px;">Report a recruiter</h2>
+    <p style="font-size:14px;color:var(--text-secondary);margin-bottom:28px;">Your submission will be reviewed before publishing. Evidence is permanently deleted after review.</p>
+
+    <form>
+
+      <!-- Section 1: Recruiter -->
+      <fieldset>
+        <legend>Recruiter</legend>
+        <div class="form-row" style="margin-bottom:12px;">
+          <div class="form-col">
+            <label>Full name *</label>
+            <input type="text" placeholder="Jane Smith" />
+          </div>
+          <div class="form-col">
+            <label>Title</label>
+            <input type="text" placeholder="Senior Technical Recruiter" />
+          </div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label>LinkedIn URL *</label>
+          <input type="url" placeholder="https://linkedin.com/in/..." />
+          <p class="helper-text">Used as the identity source of truth. Ensures the right person is identified.</p>
+        </div>
+        <div>
+          <label>Company name *</label>
+          <input type="text" placeholder="Acme Corp" />
+        </div>
+      </fieldset>
+
+      <hr />
+
+      <!-- Section 2: Timeline -->
+      <fieldset>
+        <legend>Timeline</legend>
+        <div class="form-row">
+          <div class="form-col">
+            <label>Month of incident *</label>
+            <select>
+              <option value="">Month…</option>
+              <option>January</option><option>February</option><option>March</option>
+              <option>April</option><option>May</option><option selected>June</option>
+              <option>July</option><option>August</option><option>September</option>
+              <option>October</option><option>November</option><option>December</option>
+            </select>
+          </div>
+          <div class="form-col">
+            <label>Year of incident *</label>
+            <select>
+              <option value="">Year…</option>
+              <option selected>2026</option><option>2025</option><option>2024</option>
+              <option>2023</option><option>2022</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <hr />
+
+      <!-- Section 3: Category -->
+      <fieldset>
+        <legend>What happened</legend>
+        <div class="category-grid">
+          <button type="button" class="category-card selected">
+            <span class="category-icon">👻</span>
+            <span class="category-label">Ghosted after interview</span>
+            <span class="category-desc">No follow-up after you interviewed</span>
+          </button>
+          <button type="button" class="category-card">
+            <span class="category-icon">🤖</span>
+            <span class="category-label">Bot rejection only</span>
+            <span class="category-desc">Just a form email, no human contact</span>
+          </button>
+          <button type="button" class="category-card">
+            <span class="category-icon">🚪</span>
+            <span class="category-label">Cancelled &amp; disappeared</span>
+            <span class="category-desc">Recruiter cancelled, never followed up</span>
+          </button>
+          <button type="button" class="category-card">
+            <span class="category-icon">📵</span>
+            <span class="category-label">Cold outreach ghost</span>
+            <span class="category-desc">They reached out, then went silent</span>
+          </button>
+        </div>
+      </fieldset>
+
+      <hr />
+
+      <!-- Section 4: Evidence -->
+      <fieldset>
+        <legend>Verify your experience *</legend>
+        <p class="helper-text" style="margin-bottom:16px;">A screenshot is required to verify the interaction occurred before your report can be published.</p>
+        <div style="margin-bottom:12px;">
+          <label>Evidence type *</label>
+          <select>
+            <option value="">Select evidence type…</option>
+            <option selected>Calendar invite</option>
+            <option>ATS confirmation email</option>
+            <option>LinkedIn message thread</option>
+            <option>Email from recruiter</option>
+            <option>Follow-up you sent — no reply (Tier 2)</option>
+          </select>
+          <p class="helper-text">An invite from the recruiter or company domain for a scheduled interview.</p>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label>Upload file *</label>
+          <div style="border:1px solid rgba(0,0,0,0.12);border-radius:8px;padding:12px 16px;background:#fff;font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <span style="border:1px solid rgba(0,0,0,0.15);border-radius:6px;padding:4px 12px;font-size:12px;font-weight:500;color:var(--text-primary);background:#fff;">Choose file</span>
+            <span>No file chosen</span>
+          </div>
+          <p class="file-note">Accepted: JPG, PNG, PDF</p>
+        </div>
+        <div class="privacy-box">
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20" style="color:#60a5fa;flex-shrink:0;margin-top:1px;"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+          <p>Your screenshot is reviewed by an admin and permanently deleted after review. It is never stored long-term or displayed publicly.</p>
+        </div>
+      </fieldset>
+
+      <hr />
+
+      <!-- Section 5: Summary -->
+      <div>
+        <label>Summary * <span style="font-weight:normal;font-size:12px;color:var(--text-secondary);">43/150</span></label>
+        <textarea>Confirmed interview, no follow-up despite two attempts.</textarea>
+        <p class="helper-text">Keep it factual. Avoid names of third parties not involved in the hiring process.</p>
+      </div>
+
+      <hr />
+
+      <!-- Section 6: Email -->
+      <div>
+        <label>Your email *</label>
+        <input type="email" placeholder="you@example.com" />
+        <p class="helper-text">For verification only. Never stored in plaintext or displayed publicly.</p>
+      </div>
+
+      <button type="submit" class="btn-primary w-full">Submit report</button>
+
+      <p class="submit-note">By submitting you agree to our <a href="#">community standards</a>.</p>
+    </form>
+  </div>
+</div>
+
+
+<!-- ════════════════════════ FOOTER ══════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-wordmark">NotMyRecruiter</span>
     <nav class="footer-nav">
       <a href="#">Community Standards</a>
       <a href="#">Submit a Report</a>
     </nav>
-    <p class="text-xs text-secondary">&copy; 2025 NotMyRecruiter</p>
+    <span class="footer-copy">&copy; 2026 NotMyRecruiter</span>
   </div>
 </footer>
-</div><!-- /page-feed -->
 
-
-<!-- ═══════════════════════════════════════════════════════════
-     PAGE: SUBMIT  /submit
-═══════════════════════════════════════════════════════════ -->
-<div id="page-submit" class="page">
-<main class="page-content">
-
-  <div class="mb-8">
-    <h1 class="text-3xl text-primary mb-2">Submit a Report</h1>
-    <p class="text-secondary text-sm leading-relaxed">
-      Reports are reviewed and published after a 14-day waiting period.
-      You must verify your email before submission. All reports are subject to our
-      <a href="#" style="color:var(--accent)">community standards</a>.
-    </p>
-  </div>
-
-  <div class="card">
-
-    <!-- Recruiter fieldset -->
-    <fieldset style="border:none;padding:0;margin-bottom:20px">
-      <legend class="font-semibold text-sm text-primary mb-3" style="display:block;margin-bottom:12px">Recruiter</legend>
-      <div class="grid-2">
-        <div>
-          <label class="label" for="s-rname">Full name *</label>
-          <input id="s-rname" class="input" placeholder="Jane Smith" />
-        </div>
-        <div>
-          <label class="label" for="s-rtitle">Title</label>
-          <input id="s-rtitle" class="input" placeholder="Senior Recruiter" />
-        </div>
-      </div>
-      <div class="mt-3">
-        <label class="label" for="s-rli">LinkedIn URL</label>
-        <input id="s-rli" class="input" placeholder="https://linkedin.com/in/…" type="url" />
-      </div>
-    </fieldset>
-
-    <hr class="mb-4" />
-
-    <!-- Company fieldset -->
-    <fieldset style="border:none;padding:0;margin-bottom:20px">
-      <legend class="font-semibold text-sm text-primary" style="display:block;margin-bottom:12px">Company</legend>
-      <div class="grid-2">
-        <div>
-          <label class="label" for="s-cname">Company name *</label>
-          <input id="s-cname" class="input" placeholder="Acme Corp" />
-        </div>
-        <div>
-          <label class="label" for="s-cdomain">Domain *</label>
-          <input id="s-cdomain" class="input" placeholder="acme.com" />
-        </div>
-      </div>
-      <div class="mt-3">
-        <label class="label" for="s-role">Role you applied for</label>
-        <input id="s-role" class="input" placeholder="Software Engineer, L4" />
-      </div>
-    </fieldset>
-
-    <hr class="mb-4" />
-
-    <!-- Timeline fieldset -->
-    <fieldset style="border:none;padding:0;margin-bottom:20px">
-      <legend class="font-semibold text-sm text-primary" style="display:block;margin-bottom:12px">Timeline</legend>
-      <div class="grid-2">
-        <div>
-          <label class="label" for="s-idate">Interview date *</label>
-          <input id="s-idate" class="input" type="date" />
-        </div>
-        <div>
-          <label class="label" for="s-ldate">Last contact date</label>
-          <input id="s-ldate" class="input" type="date" />
-        </div>
-      </div>
-    </fieldset>
-
-    <hr class="mb-4" />
-
-    <!-- Summary -->
-    <div style="margin-bottom:20px">
-      <label class="label" for="s-summary">
-        What happened? *
-        <span id="char-count" style="font-weight:400;margin-left:8px;color:var(--text-secondary)">0/150</span>
-      </label>
-      <textarea id="s-summary" class="input" style="height:96px" placeholder="Brief, factual description of what happened (max 150 characters)…" maxlength="150" oninput="updateCount(this)"></textarea>
-      <p class="text-xs text-secondary mt-3">Keep it factual. Avoid names of third parties not involved in the hiring process.</p>
-    </div>
-
-    <hr class="mb-4" />
-
-    <!-- Email -->
-    <div style="margin-bottom:20px">
-      <label class="label" for="s-email">Your email * (for verification)</label>
-      <input id="s-email" class="input" type="email" placeholder="you@example.com" />
-      <p class="text-xs text-secondary mt-3">We'll send a verification link. Your email is never shown publicly.</p>
-    </div>
-
-    <button class="btn-primary w-full" style="text-align:center">Submit report</button>
-
-    <p class="text-xs text-center text-secondary mt-3">
-      By submitting you agree to our
-      <a href="#" style="text-decoration:underline;color:inherit">community standards</a>.
-    </p>
-
-  </div>
-
-</main>
-
-<footer class="site-footer">
-  <div class="site-footer-inner">
-    <span class="font-semibold text-sm text-secondary" style="font-family:var(--font-serif)">NotMyRecruiter</span>
-    <nav class="footer-nav">
-      <a href="#">Community Standards</a>
-      <a href="#">Submit a Report</a>
-    </nav>
-    <p class="text-xs text-secondary">&copy; 2025 NotMyRecruiter</p>
-  </div>
-</footer>
-</div><!-- /page-submit -->
-
-
-<!-- ═══════════════════════════════════════════════════════════
-     PAGE: ABOUT  /about
-═══════════════════════════════════════════════════════════ -->
-<div id="page-about" class="page">
-<main class="page-content">
-
-  <div class="mb-10">
-    <h1 class="text-3xl text-primary mb-3">How this works</h1>
-    <p class="text-secondary text-sm leading-relaxed">
-      NotMyRecruiter is a community-maintained accountability record for recruiter
-      conduct. It exists because candidates invest significant time, energy, and
-      professional credibility in the interview process — and when recruiters go
-      silent after that investment, there is currently no accountability mechanism.
-      This platform is not a place to vent. It is a factual record of professional
-      conduct, maintained to help candidates make informed decisions.
-    </p>
-  </div>
-
-  <div class="stack gap-6">
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">What this platform is</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">Recruiters are professionals acting in a professional capacity. When a candidate completes an interview, the minimum standard of professional courtesy is a response — even a brief one. This platform documents cases where that standard was not met.
-
-Every submission is anonymous. Every recruiter is identified by their public LinkedIn profile only — a self-published professional record they have chosen to make public. No personal information beyond professional identity is collected or displayed.</p>
-    </div>
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">What qualifies as a reportable incident</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">All four of the following qualify:
-
-1. You completed one or more interviews and received no follow-up — not even a form rejection — after 14 or more days.
-2. A recruiter who initiated contact with you went silent after you responded.
-3. A recruiter cancelled a scheduled interview and never rescheduled, acknowledged your follow-up, or provided any response.
-4. You received only an automated rejection with no human follow-up after a final-round or late-stage interview.</p>
-    </div>
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">What does not qualify</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">The following are explicitly not reportable on this platform:
-
-- A recruiter declining to provide feedback on your application or interview performance. This is legally protected conduct and is not a professional failing.
-- A rejection delivered promptly and professionally, even if disappointing.
-- Any conduct that occurred less than 14 days ago. Time-gating exists to prevent premature submissions and reduce false reports.
-- Anything that cannot be characterized as professional conduct — personal grievances, compensation disputes, or matters unrelated to recruiter communication.</p>
-    </div>
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">How submissions are verified</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">Verification exists in three tiers, each conferring a different trust signal displayed on the report:
-
-Tier 1 — Email verified: Your submission email is verified before the report is published. Your email is never stored in plaintext and is never displayed publicly.
-
-Tier 2 — Header verified: You have provided the From: and Date: fields of a relevant email header confirming the recruiter's domain and the date of contact. This is the strongest submitter-side verification available.
-
-Tier 3 — Community verified: A report that has remained published for 90 or more days without being successfully disputed or reaching the flag threshold earns a community verified status.
-
-All submissions are also subject to a 14-day gate — no report can be published until at least 14 days have elapsed since the reported incident date. Submitters are limited to one report per company per 90-day window.</p>
-    </div>
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">How disputes work</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">Recruiters and companies named in a report have three paths to dispute it:
-
-Tier 1 — Recruiter self-identifies: The recruiter submits a dispute from an email address matching their company domain, and provides their LinkedIn URL matching the one on the report. If standing is verified, they may publish a rebuttal statement of up to 500 characters that appears publicly alongside the report. The report itself remains published.
-
-Tier 2 — Factual inaccuracy claim: The recruiter provides Tier 1 standing plus email header evidence demonstrating that contact was made. This triggers an admin review. The outcome — report annotated, modified, or removed — is determined solely by the admin. No automated removal path exists.
-
-Tier 3 — Legal or formal request: A written request submitted to the LLC's registered agent. This is the only dispute path available to HR or legal teams acting on behalf of a company without recruiter identity verification. Reviewed by admin and counsel as appropriate.
-
-The following are not valid grounds for removal:
-- A company claiming reputational harm
-- Disagreement with how an experience was characterized
-- Volume of dispute requests from the same company domain
-- A dispute submitted from a personal or non-company email address</p>
-    </div>
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">Community flagging</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">Any visitor may flag a report as inaccurate. A report that reaches five flags is automatically placed under review and hidden from the public feed pending admin evaluation. Flags are deduplicated by hashed IP address — one flag per report per visitor.
-
-Flagging a report because you disagree with it, or because you represent the company named, is not a valid use of the flag system. Abuse of the flag system may result in submissions from your network being deprioritized.</p>
-    </div>
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">Prohibited content</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">Submissions that contain any of the following will be removed and the submitter account banned:
-
-- Personal attacks, insults, or language targeting the recruiter as a person rather than documenting their professional conduct
-- Identifying information beyond professional identity — home address, personal email, phone number, or any non-public personal detail
-- False or fabricated accounts of events
-- Content submitted on behalf of another person without their knowledge
-- Harassment of any kind</p>
-    </div>
-
-    <div class="card">
-      <h2 class="text-base font-semibold text-primary mb-2">Legal and platform structure</h2>
-      <p class="text-sm text-secondary leading-relaxed whitespace-pre-line">NotMyRecruiter operates as an LLC. As a platform for user-generated content, it is protected under Section 230 of the Communications Decency Act, which provides federal immunity to interactive computer services from liability for content submitted by users.
-
-Submitters are solely responsible for the accuracy of their submissions. By submitting a report, you attest that the account is truthful, based on your direct personal experience, and does not contain prohibited content as defined above.
-
-Formal legal correspondence should be directed to the registered agent address on file with the state of formation. Contact for all other inquiries: [your contact email]</p>
-    </div>
-
-  </div>
-
-  <div class="callout mt-10">
-    <p class="text-sm text-primary leading-relaxed">
-      <span class="font-semibold">Questions or formal correspondence?</span>
-      For general questions about how the platform works, contact us at [email]. For
-      formal legal requests, correspondence must be directed to our registered agent.
-      Dispute requests submitted via email rather than the dispute form will not be
-      processed.
-    </p>
-  </div>
-
-</main>
-
-<footer class="site-footer">
-  <div class="site-footer-inner">
-    <span class="font-semibold text-sm text-secondary" style="font-family:var(--font-serif)">NotMyRecruiter</span>
-    <nav class="footer-nav">
-      <a href="#">Community Standards</a>
-      <a href="#">Submit a Report</a>
-    </nav>
-    <p class="text-xs text-secondary">&copy; 2025 NotMyRecruiter</p>
-  </div>
-</footer>
-</div><!-- /page-about -->
-
-</div><!-- /scroll-wrap -->
-
-<script>
-  function showPage(id, btn) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
-    document.querySelectorAll('.preview-nav button').forEach(b => b.classList.remove('active'))
-    document.getElementById('page-' + id).classList.add('active')
-    btn.classList.add('active')
-    document.querySelector('.scroll-wrap').scrollTop = 0
-  }
-
-  function setChip(btn) {
-    btn.closest('.flex').querySelectorAll('.chip').forEach(c => {
-      c.classList.remove('chip-active')
-      c.classList.add('chip-inactive')
-    })
-    btn.classList.remove('chip-inactive')
-    btn.classList.add('chip-active')
-  }
-
-  function updateCount(el) {
-    const count = el.value.length
-    const counter = document.getElementById('char-count')
-    counter.textContent = count + '/150'
-    counter.style.color = count >= 150 ? 'var(--accent)' : 'var(--text-secondary)'
-  }
-</script>
 </body>
 </html>
