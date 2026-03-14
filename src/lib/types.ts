@@ -6,6 +6,19 @@ export type SubmissionStatus = 'pending' | 'published' | 'under_review' | 'remov
 export type DisputeTier = 'tier_1' | 'tier_2'
 export type DisputeStatus = 'pending' | 'accepted' | 'rejected'
 
+export type EvidenceType =
+  | 'calendar_invite'
+  | 'ats_confirmation'
+  | 'linkedin_message'
+  | 'recruiter_email'
+  | 'followup_screenshot'
+
+export type VerificationTier =
+  | 'email_only'            // email verified, evidence pending admin review
+  | 'interaction_confirmed' // evidence reviewed: calendar_invite | ats_confirmation | linkedin_message | recruiter_email
+  | 'header_verified'       // evidence reviewed: followup_screenshot
+  | 'community_verified'    // published 90+ days, no successful dispute, below flag threshold
+
 export interface Company {
   id: string
   name: string
@@ -54,6 +67,10 @@ export interface Submission {
   flag_count: number
   has_rebuttal: boolean
   published_at: string | null
+  evidence_type: EvidenceType | null
+  evidence_reviewed: boolean
+  evidence_deleted_at: string | null
+  verification_tier: VerificationTier | null
   created_at: string
   updated_at: string
   // joined

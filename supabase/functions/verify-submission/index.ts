@@ -8,6 +8,15 @@ const corsHeaders = {
 
 const GATE_DAYS = 14           // minimum days since interview before publishing
 const RATE_LIMIT_DAYS = 90     // one report per company per submitter per 90 days
+const EVIDENCE_EXPIRY_DAYS = 7 // auto-remove pending submissions with unreviewed evidence after 7 days
+
+// Evidence types that earn interaction_confirmed tier
+const INTERACTION_CONFIRMED_TYPES = [
+  'calendar_invite',
+  'ats_confirmation',
+  'linkedin_message',
+  'recruiter_email',
+]
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -21,7 +30,38 @@ serve(async (req) => {
       { auth: { persistSession: false } }
     )
 
-    const { submission_id } = await req.json()
+    const body = await req.json()
+    const { submission_id, purge_stale } = body
+
+    // ── Purge stale unreviewed submissions ───────────────────
+    // Called on a schedule (e.g. daily cron) with { purge_stale: true }
+    if (purge_stale) {
+      const expiryDate = new Date(
+        Date.now() - EVIDENCE_EXPIRY_DAYS * 24 * 60 * 60 * 1000
+      ).toISOString()
+
+      const { data: stale, error: staleError } = await supabase
+        .from('submissions')
+        .select('id, evidence_storage_path')
+        .eq('status', 'pending')
+        .eq('evidence_reviewed', false)
+        .lt('created_at', expiryDate)
+
+      if (staleError) throw staleError
+
+      for (const s of stale ?? []) {
+        // Delete evidence from storage if present
+        if (s.evidence_storage_path) {
+          await supabase.storage.from('evidence').remove([s.evidence_storage_path])
+        }
+        await supabase.from('submissions').update({ status: 'removed' }).eq('id', s.id)
+      }
+
+      return new Response(
+        JSON.stringify({ success: true, purged: stale?.length ?? 0 }),
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
     if (!submission_id) {
       return new Response(
@@ -63,7 +103,18 @@ serve(async (req) => {
       )
     }
 
-    // Check 2: 14-day gate since interview_date
+    // Check 2: Evidence must be reviewed before publication
+    if (!submission.evidence_reviewed) {
+      return new Response(
+        JSON.stringify({
+          error: 'Submission cannot be published until evidence has been reviewed by an admin.',
+          verification_tier: 'email_only',
+        }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Check 3: 14-day gate since interview_date
     const interviewDate = new Date(submission.interview_date)
     const daysSinceInterview = (Date.now() - interviewDate.getTime()) / (1000 * 60 * 60 * 24)
     if (daysSinceInterview < GATE_DAYS) {
@@ -76,8 +127,10 @@ serve(async (req) => {
       )
     }
 
-    // Check 3: Rate limit — 1 submission per company per submitter per 90 days
-    const rateLimitStart = new Date(Date.now() - RATE_LIMIT_DAYS * 24 * 60 * 60 * 1000).toISOString()
+    // Check 4: Rate limit — 1 submission per company per submitter per 90 days
+    const rateLimitStart = new Date(
+      Date.now() - RATE_LIMIT_DAYS * 24 * 60 * 60 * 1000
+    ).toISOString()
 
     const { data: recentSubmissions, error: rateError } = await supabase
       .from('submissions')
@@ -102,11 +155,26 @@ serve(async (req) => {
       )
     }
 
+    // Determine verification tier from evidence_type
+    let verificationTier: string
+    if (submission.evidence_type === 'followup_screenshot') {
+      verificationTier = 'header_verified'
+    } else if (INTERACTION_CONFIRMED_TYPES.includes(submission.evidence_type)) {
+      verificationTier = 'interaction_confirmed'
+    } else {
+      // Fallback: evidence_reviewed is true but type is unknown — treat as interaction_confirmed
+      verificationTier = 'interaction_confirmed'
+    }
+
     // All checks passed — publish the submission
     const now = new Date().toISOString()
     const { error: updateError } = await supabase
       .from('submissions')
-      .update({ status: 'published', published_at: now })
+      .update({
+        status: 'published',
+        published_at: now,
+        verification_tier: verificationTier,
+      })
       .eq('id', submission_id)
 
     if (updateError) {
@@ -114,7 +182,7 @@ serve(async (req) => {
     }
 
     return new Response(
-      JSON.stringify({ success: true, published_at: now }),
+      JSON.stringify({ success: true, published_at: now, verification_tier: verificationTier }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     )
   } catch (err) {

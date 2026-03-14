@@ -38,16 +38,28 @@ export default async function AdminPage() {
     .eq('status', 'pending')
     .order('created_at', { ascending: true })
 
+  // Fetch evidence review queue — pending submissions with unreviewed evidence
+  const { data: evidenceQueue } = await supabase
+    .from('submissions')
+    .select(`*, recruiters (*, companies (*)), companies (*)`)
+    .eq('status', 'pending')
+    .eq('evidence_reviewed', false)
+    .is('evidence_deleted_at', null)
+    .order('created_at', { ascending: true })
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-serif text-[var(--text-primary)]">Admin Queue</h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
-            Flagged reports and pending disputes
+            Evidence review, flagged reports, and pending disputes
           </p>
         </div>
         <div className="flex gap-3 text-sm">
+          <span className="chip chip-inactive">
+            {evidenceQueue?.length ?? 0} evidence
+          </span>
           <span className="chip chip-inactive">
             {flaggedSubmissions?.length ?? 0} flagged
           </span>
@@ -60,6 +72,7 @@ export default async function AdminPage() {
       <AdminQueue
         flaggedSubmissions={flaggedSubmissions ?? []}
         pendingDisputes={pendingDisputes ?? []}
+        evidenceQueue={evidenceQueue ?? []}
       />
     </div>
   )
