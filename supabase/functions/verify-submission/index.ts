@@ -49,12 +49,20 @@ serve(async (req) => {
 
       if (staleError) throw staleError
 
+      const now = new Date().toISOString()
       for (const s of stale ?? []) {
         // Delete evidence from storage if present
         if (s.evidence_storage_path) {
           await supabase.storage.from('evidence').remove([s.evidence_storage_path])
         }
-        await supabase.from('submissions').update({ status: 'removed' }).eq('id', s.id)
+        await supabase
+          .from('submissions')
+          .update({
+            status: 'removed',
+            evidence_deleted_at: now,
+            evidence_storage_path: null,
+          })
+          .eq('id', s.id)
       }
 
       return new Response(
