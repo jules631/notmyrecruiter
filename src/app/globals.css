@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --accent: #E8453C;
+    --accent-hover: #d03a31;
+    --surface: #f9f8f5;
+    --card-border: #e5e3de;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b6b6b;
+  }
+
+  body {
+    @apply font-sans bg-surface text-[var(--text-primary)] antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white border border-[var(--card-border)] rounded-card p-5 transition-shadow duration-200;
+  }
+
+  .card:hover {
+    @apply shadow-card-hover;
+  }
+
+  .btn-primary {
+    @apply bg-accent hover:bg-accent-hover text-white font-medium px-5 py-2.5 rounded-lg transition-colors duration-150 text-sm;
+  }
+
+  .btn-secondary {
+    @apply bg-white hover:bg-gray-50 text-[var(--text-primary)] font-medium px-5 py-2.5 rounded-lg border border-[var(--card-border)] transition-colors duration-150 text-sm;
+  }
+
+  .chip {
+    @apply px-3.5 py-1.5 rounded-full text-sm font-medium border transition-colors duration-150 cursor-pointer;
+  }
+
+  .chip-active {
+    @apply bg-accent text-white border-accent;
+  }
+
+  .chip-inactive {
+    @apply bg-white text-[var(--text-secondary)] border-[var(--card-border)] hover:border-gray-400;
+  }
+
+  .input {
+    @apply w-full px-4 py-2.5 border border-[var(--card-border)] rounded-lg text-sm text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent transition-colors duration-150 bg-white;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-[var(--text-primary)] mb-1.5;
+  }
+
+  .badge-flagged {
+    @apply inline-flex items-center gap-1 text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full;
+  }
+
+  .badge-rebuttal {
+    @apply inline-flex items-center gap-1 text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full;
+  }
+}
