@@ -20,7 +20,7 @@ export default function SearchBar({ value, onChange }: Props) {
       </svg>
       <input
         type="search"
-        placeholder="Search recruiter, company, or role…"
+        placeholder="Search company..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="input pl-10"

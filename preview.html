@@ -12,9 +12,7 @@
 
     :root {
       --accent: #E8453C;
-      --accent-hover: #d03a31;
       --surface: #f9f8f5;
-      --card-border: rgba(0,0,0,0.1);
       --text-primary: #1a1a1a;
       --text-secondary: #6b6b6b;
     }
@@ -26,8 +24,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    h1, h2, h3 { font-family: 'DM Serif Display', Georgia, serif; }
-
     /* ── Header ── */
     header {
       border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -37,424 +33,257 @@
       z-index: 50;
     }
     .header-inner {
-      max-width: 768px;
-      margin: 0 auto;
-      padding: 0 16px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      max-width: 768px; margin: 0 auto; padding: 0 16px;
+      height: 56px; display: flex; align-items: center; justify-content: space-between;
     }
-    .wordmark {
-      font-family: 'DM Serif Display', serif;
-      font-size: 20px;
-      color: var(--text-primary);
-      text-decoration: none;
-    }
-    .wordmark:hover { color: var(--accent); }
+    .wordmark { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text-primary); text-decoration: none; }
     nav { display: flex; align-items: center; gap: 4px; }
-    .nav-link {
-      font-size: 14px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      color: var(--text-secondary);
-      transition: color 0.15s;
-    }
-    .nav-link:hover { color: var(--text-primary); }
+    .nav-link { font-size: 14px; padding: 6px 12px; border-radius: 6px; text-decoration: none; color: var(--text-secondary); }
     .nav-link.active { color: var(--accent); font-weight: 500; }
-
-    /* Buttons */
     .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: background 0.15s;
+      background: #E8453C; color: #fff; font-family: 'DM Sans', sans-serif;
+      font-weight: 500; font-size: 14px; padding: 10px 20px; border-radius: 8px;
+      border: none; cursor: pointer; text-decoration: none; display: inline-block;
       margin-left: 8px;
     }
-    .btn-primary:hover { background: var(--accent-hover); }
-    .btn-primary.w-full { display: block; width: 100%; text-align: center; margin-left: 0; }
-
-    .btn-secondary {
-      background: #fff;
-      color: var(--text-primary);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      padding: 10px 20px;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: background 0.15s;
-      display: inline-block;
-    }
-    .btn-secondary:hover { background: #f9f8f5; }
+    .btn-primary.w-full { display: block; width: 100%; text-align: center; margin-left: 0; padding: 12px 20px; }
 
     /* ── Hero ── */
+    .page { max-width: 768px; margin: 0 auto; padding: 40px 16px; }
     .hero { margin-bottom: 40px; }
 
     .eyebrow-pill {
-      display: inline-flex;
-      align-items: center;
-      background: #FFF0EF;
-      color: #E8453C;
-      font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 20px;
-      padding: 4px 12px;
-      margin-bottom: 16px;
+      display: inline-flex; align-items: center;
+      background: #FFF0EF; color: #E8453C;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      border-radius: 20px; padding: 4px 12px; margin-bottom: 16px;
     }
 
     .hero-h1 {
       font-family: 'DM Serif Display', serif;
-      font-size: 48px;
-      color: #1a1a1a;
-      letter-spacing: -1px;
-      line-height: 1.1;
-      margin-bottom: 16px;
+      font-size: 48px; letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px;
     }
-    .hero-h1 .accent { color: #E8453C; }
 
     .hero-sub {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      color: #6b6b6b;
-      max-width: 480px;
-      margin-bottom: 32px;
-      line-height: 1.6;
+      font-size: 16px; color: #6b6b6b; max-width: 520px; margin-bottom: 32px; line-height: 1.6;
     }
 
-    /* Stats bar */
+    /* Stats bar — exactly 4 specified values */
     .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
       padding: 24px 0;
       border-top: 1px solid rgba(0,0,0,0.08);
       border-bottom: 1px solid rgba(0,0,0,0.08);
       margin-bottom: 40px;
     }
     .stat { text-align: center; }
-    .stat-number {
-      font-family: 'DM Serif Display', serif;
-      font-size: 28px;
-      color: #E8453C;
-      line-height: 1;
-      display: block;
-    }
-    .stat-label { font-size: 12px; color: #6b6b6b; margin-top: 4px; display: block; }
+    .stat-number { font-family: 'DM Serif Display', serif; font-size: 26px; color: #E8453C; line-height: 1; display: block; }
+    .stat-label { font-size: 11px; color: #6b6b6b; margin-top: 5px; display: block; }
 
-    /* Filter area */
-    .feed-controls { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
-    .search-bar {
-      flex: 1;
-      min-width: 200px;
-      padding: 10px 16px;
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: var(--text-primary);
-      background: #fff;
-      outline: none;
-    }
-    .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,69,60,0.15); }
+    /* Controls row: chips left, search right */
+    .controls { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .chips-wrap { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
 
     .chip {
-      padding: 6px 14px;
-      border-radius: 9999px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      border: 1px solid rgba(0,0,0,0.1);
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
+      padding: 6px 14px; border-radius: 9999px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+      border: 1px solid rgba(0,0,0,0.1); cursor: pointer; white-space: nowrap;
     }
     .chip.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
     .chip.inactive { background: #fff; color: var(--text-secondary); }
-    .chip.inactive:hover { border-color: #999; }
 
-    /* ── Feed Cards ── */
+    .search-wrap { flex-shrink: 0; width: 192px; position: relative; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; }
+    .search-input {
+      width: 100%; padding: 8px 12px 8px 36px;
+      border: 1px solid rgba(0,0,0,0.1); border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text-primary);
+      background: #fff; outline: none;
+    }
+    .search-input::placeholder { color: var(--text-secondary); }
+
+    /* Feed cards */
     .feed { display: flex; flex-direction: column; gap: 16px; }
 
     .card {
-      background: #ffffff;
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 10px;
-      padding: 20px 22px;
-      transition: box-shadow 0.2s ease;
-      position: relative;
+      background: #fff; border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 10px; padding: 20px 22px;
+      transition: box-shadow 0.2s; position: relative;
     }
     .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.14); }
 
-    .card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; padding-right: 112px; }
-    .recruiter-name { font-weight: 600; font-size: 14px; color: var(--text-primary); }
-    .recruiter-title { font-size: 12px; color: var(--text-secondary); }
-    .company-line { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-
-    .card-summary { font-size: 14px; color: var(--text-primary); line-height: 1.6; margin-bottom: 16px; }
-
+    .card-top { padding-right: 110px; margin-bottom: 10px; }
+    .recruiter-name { font-weight: 600; font-size: 14px; }
+    .recruiter-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .card-summary { font-size: 14px; line-height: 1.6; margin-bottom: 14px; }
     .card-footer { display: flex; align-items: center; justify-content: space-between; }
     .card-footer-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .card-footer-right { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); }
 
     .flag-btn {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      color: var(--text-secondary);
-      background: none;
-      border: none;
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.15s, color 0.15s;
-      text-decoration: none;
+      display: flex; align-items: center; gap: 4px;
+      font-size: 12px; color: var(--text-secondary); background: none; border: none;
+      cursor: pointer; opacity: 0; transition: opacity 0.15s; text-decoration: none;
     }
     .card:hover .flag-btn { opacity: 1; }
-    .flag-btn:hover { color: var(--accent); }
 
     /* Badges */
     .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      font-weight: 500;
-      padding: 2px 8px;
-      border-radius: 9999px;
-      border: 1px solid;
-    }
-    .badge-pending { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; }
-    .badge-verified { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
-    .badge-community { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-    .badge-flagged { background: #fffbeb; color: #b45309; border-color: #fde68a; }
-    .badge-rebuttal { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-    .badge-category {
-      background: #FFF0EF;
-      color: #E8453C;
-      border-color: rgba(232,69,60,0.2);
-      position: absolute;
-      top: 16px;
-      right: 16px;
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 9999px; border: 1px solid;
     }
     .badge svg { width: 12px; height: 12px; }
+    .b-pending  { background: #f3f4f6; color: #6b7280; border-color: #e5e7eb; }
+    .b-verified { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+    .b-followup { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+    .b-community{ background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+    .b-flagged  { background: #fffbeb; color: #b45309; border-color: #fde68a; }
+    .b-category {
+      background: #FFF0EF; color: #E8453C; border-color: rgba(232,69,60,0.2);
+      position: absolute; top: 16px; right: 16px;
+    }
 
-    /* ── Submission Form ── */
+    /* Form section */
     .form-wrap { background: var(--surface); padding: 40px 16px; }
     .form-page { background: #fff; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); padding: 32px; max-width: 560px; margin: 0 auto; }
-
     form { display: flex; flex-direction: column; gap: 24px; }
-
     fieldset { border: none; padding: 0; }
     legend { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; display: block; }
-
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .form-col { display: flex; flex-direction: column; }
-
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="url"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px 16px;
-      border: 1px solid rgba(0,0,0,0.15);
-      border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: var(--text-primary);
-      background: #fff;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(232,69,60,0.15);
+    label { display: block; font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 6px; }
+    input[type="text"], input[type="email"], input[type="url"], select, textarea {
+      width: 100%; padding: 10px 16px; border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--text-primary); background: #fff; outline: none;
     }
     ::placeholder { color: var(--text-secondary); }
-
     .helper-text { font-size: 12px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
-
     hr { border: none; border-top: 1px solid rgba(0,0,0,0.1); }
 
-    /* Category cards */
     .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .category-card {
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.1);
-      border-radius: 10px;
-      padding: 16px;
-      cursor: pointer;
-      text-align: left;
-      transition: border-color 0.15s, box-shadow 0.15s;
-      display: flex;
-      flex-direction: column;
+      background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;
+      padding: 16px; cursor: pointer; text-align: left;
+      display: flex; flex-direction: column;
     }
-    .category-card:hover { border-color: rgba(0,0,0,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .category-card.selected { border-color: var(--accent); background: rgba(232,69,60,0.04); box-shadow: 0 0 0 1px rgba(232,69,60,0.3); }
-    .category-icon { font-size: 24px; margin-bottom: 6px; }
-    .category-label { font-size: 14px; font-weight: 500; color: var(--text-primary); line-height: 1.3; margin-bottom: 2px; }
-    .category-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+    .category-card.selected { border-color: #E8453C; background: rgba(232,69,60,0.04); box-shadow: 0 0 0 1px rgba(232,69,60,0.3); }
+    .cat-icon { font-size: 24px; margin-bottom: 6px; }
+    .cat-label { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+    .cat-desc  { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 
-    /* Privacy box */
     .privacy-box {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      padding: 10px 12px;
+      display: flex; gap: 8px; align-items: flex-start;
+      background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 10px 12px;
     }
     .privacy-box p { font-size: 12px; color: #1d4ed8; line-height: 1.5; }
-
     textarea { resize: none; height: 96px; }
-
     .file-note { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
     .submit-note { font-size: 12px; color: var(--text-secondary); text-align: center; }
     .submit-note a { text-decoration: underline; }
 
     /* Preview divider */
-    .preview-divider {
-      text-align: center;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #aaa;
-      padding: 32px 0 8px;
+    .divider {
+      text-align: center; font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #aaa; padding: 32px 0 8px;
     }
-    .preview-divider::before, .preview-divider::after {
-      content: '';
-      display: inline-block;
-      width: 60px;
-      height: 1px;
-      background: #ddd;
-      vertical-align: middle;
-      margin: 0 12px;
+    .divider::before, .divider::after {
+      content: ''; display: inline-block; width: 60px; height: 1px;
+      background: #ddd; vertical-align: middle; margin: 0 12px;
     }
 
     /* Footer */
-    footer {
-      border-top: 1px solid rgba(0,0,0,0.1);
-      background: #fff;
-      margin-top: 0;
-    }
+    footer { border-top: 1px solid rgba(0,0,0,0.1); background: #fff; }
     .footer-inner {
-      max-width: 768px;
-      margin: 0 auto;
-      padding: 32px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+      max-width: 768px; margin: 0 auto; padding: 32px 16px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
     }
     .footer-wordmark { font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--text-secondary); }
     .footer-nav { display: flex; gap: 20px; }
     .footer-nav a { font-size: 14px; color: var(--text-secondary); text-decoration: none; }
-    .footer-nav a:hover { color: var(--text-primary); }
     .footer-copy { font-size: 12px; color: var(--text-secondary); }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<!-- ══════════════════════════════ HEADER ══════════════════════════════ -->
 <header>
   <div class="header-inner">
     <a href="#" class="wordmark">NotMyRecruiter</a>
     <nav>
-      <a href="#home" class="nav-link active">Browse</a>
-      <a href="#about" class="nav-link">About</a>
+      <a href="#" class="nav-link active">Browse</a>
+      <a href="#" class="nav-link">About</a>
       <a href="#submit" class="btn-primary">Report an Incident</a>
     </nav>
   </div>
 </header>
 
-<!-- ═══════════════════════ HOME PAGE ════════════════════════════ -->
-<div id="home" style="max-width:768px; margin:0 auto; padding:40px 16px;">
+<!-- ══════════════════════════ HOME PAGE ═══════════════════════════════ -->
+<div class="page">
 
   <!-- Hero -->
   <div class="hero">
-    <div class="eyebrow-pill">Community-driven accountability</div>
+    <div class="eyebrow-pill">ACCOUNTABILITY FOR CANDIDATES</div>
 
     <h1 class="hero-h1">
-      Recruiter Accountability,<br>
-      <span class="accent">Community-Driven.</span>
+      <span style="color:#1a1a1a;">Recruiters who ghost deserve to be&nbsp;</span><em style="color:#E8453C;">remembered.</em>
     </h1>
 
     <p class="hero-sub">
-      Real reports from real candidates. When recruiters ghost you after interviews,
-      the community should know.
+      A public record of recruiters who couldn't extend basic professional courtesy
+      after your time and effort.
     </p>
 
-    <!-- Stats bar -->
+    <!-- Stats bar: exactly the four specified values -->
     <div class="stats-bar">
       <div class="stat">
-        <span class="stat-number">2.4k</span>
-        <span class="stat-label">Reports filed</span>
+        <span class="stat-number">1,284</span>
+        <span class="stat-label">Reports submitted</span>
       </div>
       <div class="stat">
-        <span class="stat-number">89%</span>
-        <span class="stat-label">Verified reports</span>
+        <span class="stat-number">392</span>
+        <span class="stat-label">Companies flagged</span>
       </div>
       <div class="stat">
-        <span class="stat-number">14d</span>
-        <span class="stat-label">Avg. review time</span>
+        <span class="stat-number">78%</span>
+        <span class="stat-label">Post-interview ghosts</span>
       </div>
       <div class="stat">
-        <span class="stat-number">340</span>
-        <span class="stat-label">Companies tracked</span>
+        <span class="stat-number">14 days</span>
+        <span class="stat-label">Avg wait before ghosting</span>
       </div>
     </div>
   </div>
 
-  <!-- Feed controls -->
-  <div class="feed-controls">
-    <input class="search-bar" type="text" placeholder="Search by recruiter, company, or summary…" />
-    <button class="chip active">Recent</button>
-    <button class="chip inactive">Most flagged</button>
-    <button class="chip inactive">Disputed</button>
+  <!-- Controls: chips left, search right -->
+  <div class="controls">
+    <div class="chips-wrap">
+      <button class="chip active">All</button>
+      <button class="chip inactive">👻 Ghosted after interview</button>
+      <button class="chip inactive">🤖 Bot rejection only</button>
+      <button class="chip inactive">🚪 Cancelled &amp; disappeared</button>
+      <button class="chip inactive">📵 Cold outreach ghost</button>
+    </div>
+    <div class="search-wrap">
+      <svg class="search-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/></svg>
+      <input class="search-input" type="search" placeholder="Search company..." />
+    </div>
   </div>
 
   <!-- Feed cards -->
   <div class="feed">
 
-    <!-- Card 1: Ghosted, Interaction verified -->
+    <!-- Card 1 -->
     <article class="card">
-      <span class="badge badge-category">👻 Ghosted</span>
+      <span class="badge b-category">👻 Ghosted</span>
       <div class="card-top">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-            <span class="recruiter-name">Sarah Chen</span>
-            <span class="recruiter-title">Senior Technical Recruiter</span>
-          </div>
-          <div class="company-line">Stripe &middot; Mar 2025</div>
-        </div>
+        <div class="recruiter-name">Sarah Chen <span style="font-weight:400;font-size:12px;color:var(--text-secondary);">· Senior Technical Recruiter</span></div>
+        <div class="recruiter-meta">Stripe &middot; Mar 2025</div>
       </div>
-      <p class="card-summary">Had a great final-round interview with the hiring manager. Sarah confirmed next steps over LinkedIn. Never heard back despite two follow-up messages over the next three weeks.</p>
+      <p class="card-summary">Had a great final-round interview with the hiring manager. Sarah confirmed next steps over LinkedIn. Never heard back despite two follow-up messages over three weeks.</p>
       <div class="card-footer">
         <div class="card-footer-left">
-          <span class="badge badge-verified">
+          <span class="badge b-verified">
             <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
             Interaction verified
           </span>
@@ -469,22 +298,18 @@
       </div>
     </article>
 
-    <!-- Card 2: Bot rejection, Pending, flagged -->
+    <!-- Card 2 -->
     <article class="card">
-      <span class="badge badge-category">🤖 Bot rejection</span>
+      <span class="badge b-category">🤖 Bot rejection</span>
       <div class="card-top">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="recruiter-name">Marcus Webb</span>
-          </div>
-          <div class="company-line">Airbnb &middot; Jan 2025</div>
-        </div>
+        <div class="recruiter-name">Marcus Webb</div>
+        <div class="recruiter-meta">Airbnb &middot; Jan 2025</div>
       </div>
       <p class="card-summary">Marcus reached out on LinkedIn with a personalized message about a Senior SWE role. I responded, completed a take-home, then received an automated rejection two months later with no human contact.</p>
       <div class="card-footer">
         <div class="card-footer-left">
-          <span class="badge badge-pending">Pending review</span>
-          <span class="badge badge-flagged">
+          <span class="badge b-pending">Pending review</span>
+          <span class="badge b-flagged">
             <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10l-1.5 2.5L16 8H6a1 1 0 00-1 1v7H3V6z" clip-rule="evenodd"/></svg>
             4
           </span>
@@ -499,26 +324,21 @@
       </div>
     </article>
 
-    <!-- Card 3: Cold ghost, Follow-up verified, rebuttal -->
+    <!-- Card 3 -->
     <article class="card">
-      <span class="badge badge-category">📵 Cold ghost</span>
+      <span class="badge b-category">📵 Cold ghost</span>
       <div class="card-top">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="recruiter-name">Priya Nair</span>
-            <span class="recruiter-title">Talent Acquisition Lead</span>
-          </div>
-          <div class="company-line">Figma &middot; Nov 2024</div>
-        </div>
+        <div class="recruiter-name">Priya Nair <span style="font-weight:400;font-size:12px;color:var(--text-secondary);">· Talent Acquisition Lead</span></div>
+        <div class="recruiter-meta">Figma &middot; Nov 2024</div>
       </div>
       <p class="card-summary">Priya sent a cold InMail about a product design role and asked me to send my portfolio. I did within 24 hours. Never received a response despite two follow-ups over 6 weeks.</p>
       <div class="card-footer">
         <div class="card-footer-left">
-          <span class="badge badge-verified">
+          <span class="badge b-followup">
             <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
             Follow-up verified
           </span>
-          <span class="badge badge-rebuttal">rebuttal</span>
+          <span class="badge" style="background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;">rebuttal</span>
         </div>
         <div class="card-footer-right">
           <span>reported 45 days ago</span>
@@ -530,22 +350,17 @@
       </div>
     </article>
 
-    <!-- Card 4: Cancelled, Community verified -->
+    <!-- Card 4 -->
     <article class="card">
-      <span class="badge badge-category">🚪 Cancelled</span>
+      <span class="badge b-category">🚪 Cancelled</span>
       <div class="card-top">
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;">
-            <span class="recruiter-name">Jordan Kim</span>
-            <span class="recruiter-title">Engineering Recruiter</span>
-          </div>
-          <div class="company-line">Vercel &middot; Aug 2024</div>
-        </div>
+        <div class="recruiter-name">Jordan Kim <span style="font-weight:400;font-size:12px;color:var(--text-secondary);">· Engineering Recruiter</span></div>
+        <div class="recruiter-meta">Vercel &middot; Aug 2024</div>
       </div>
       <p class="card-summary">Jordan cancelled the final interview 30 minutes before it was scheduled with no explanation. Follow-up emails and LinkedIn messages went unanswered for over two months.</p>
       <div class="card-footer">
         <div class="card-footer-left">
-          <span class="badge badge-community">
+          <span class="badge b-community">
             <svg fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"/></svg>
             Community verified
           </span>
@@ -566,17 +381,15 @@
 </div>
 
 
-<!-- ══════════════════════ SUBMIT PAGE ═══════════════════════════ -->
-<div class="preview-divider">Submit page</div>
+<!-- ════════════════════════ SUBMIT PAGE ═══════════════════════════════ -->
+<div class="divider">Submit page</div>
 
 <div id="submit" class="form-wrap">
   <div class="form-page">
-    <h2 style="font-size:22px;margin-bottom:4px;">Report a recruiter</h2>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;">Report a recruiter</h2>
     <p style="font-size:14px;color:var(--text-secondary);margin-bottom:28px;">Your submission will be reviewed before publishing. Evidence is permanently deleted after review.</p>
 
     <form>
-
-      <!-- Section 1: Recruiter -->
       <fieldset>
         <legend>Recruiter</legend>
         <div class="form-row" style="margin-bottom:12px;">
@@ -602,77 +415,59 @@
 
       <hr />
 
-      <!-- Section 2: Timeline -->
       <fieldset>
         <legend>Timeline</legend>
         <div class="form-row">
           <div class="form-col">
             <label>Month of incident *</label>
-            <select>
-              <option value="">Month…</option>
-              <option>January</option><option>February</option><option>March</option>
-              <option>April</option><option>May</option><option selected>June</option>
-              <option>July</option><option>August</option><option>September</option>
-              <option>October</option><option>November</option><option>December</option>
-            </select>
+            <select><option>Month…</option><option selected>June</option></select>
           </div>
           <div class="form-col">
             <label>Year of incident *</label>
-            <select>
-              <option value="">Year…</option>
-              <option selected>2026</option><option>2025</option><option>2024</option>
-              <option>2023</option><option>2022</option>
-            </select>
+            <select><option selected>2026</option><option>2025</option></select>
           </div>
         </div>
       </fieldset>
 
       <hr />
 
-      <!-- Section 3: Category -->
       <fieldset>
         <legend>What happened</legend>
         <div class="category-grid">
           <button type="button" class="category-card selected">
-            <span class="category-icon">👻</span>
-            <span class="category-label">Ghosted after interview</span>
-            <span class="category-desc">No follow-up after you interviewed</span>
+            <span class="cat-icon">👻</span>
+            <span class="cat-label">Ghosted after interview</span>
+            <span class="cat-desc">No follow-up after you interviewed</span>
           </button>
           <button type="button" class="category-card">
-            <span class="category-icon">🤖</span>
-            <span class="category-label">Bot rejection only</span>
-            <span class="category-desc">Just a form email, no human contact</span>
+            <span class="cat-icon">🤖</span>
+            <span class="cat-label">Bot rejection only</span>
+            <span class="cat-desc">Just a form email, no human contact</span>
           </button>
           <button type="button" class="category-card">
-            <span class="category-icon">🚪</span>
-            <span class="category-label">Cancelled &amp; disappeared</span>
-            <span class="category-desc">Recruiter cancelled, never followed up</span>
+            <span class="cat-icon">🚪</span>
+            <span class="cat-label">Cancelled &amp; disappeared</span>
+            <span class="cat-desc">Recruiter cancelled, never followed up</span>
           </button>
           <button type="button" class="category-card">
-            <span class="category-icon">📵</span>
-            <span class="category-label">Cold outreach ghost</span>
-            <span class="category-desc">They reached out, then went silent</span>
+            <span class="cat-icon">📵</span>
+            <span class="cat-label">Cold outreach ghost</span>
+            <span class="cat-desc">They reached out, then went silent</span>
           </button>
         </div>
       </fieldset>
 
       <hr />
 
-      <!-- Section 4: Evidence -->
       <fieldset>
         <legend>Verify your experience *</legend>
         <p class="helper-text" style="margin-bottom:16px;">A screenshot is required to verify the interaction occurred before your report can be published.</p>
         <div style="margin-bottom:12px;">
           <label>Evidence type *</label>
           <select>
-            <option value="">Select evidence type…</option>
+            <option>Select evidence type…</option>
             <option selected>Calendar invite</option>
-            <option>ATS confirmation email</option>
-            <option>LinkedIn message thread</option>
-            <option>Email from recruiter</option>
-            <option>Follow-up you sent — no reply (Tier 2)</option>
           </select>
-          <p class="helper-text">An invite from the recruiter or company domain for a scheduled interview.</p>
         </div>
         <div style="margin-bottom:12px;">
           <label>Upload file *</label>
@@ -690,7 +485,6 @@
 
       <hr />
 
-      <!-- Section 5: Summary -->
       <div>
         <label>Summary * <span style="font-weight:normal;font-size:12px;color:var(--text-secondary);">43/150</span></label>
         <textarea>Confirmed interview, no follow-up despite two attempts.</textarea>
@@ -699,7 +493,6 @@
 
       <hr />
 
-      <!-- Section 6: Email -->
       <div>
         <label>Your email *</label>
         <input type="email" placeholder="you@example.com" />
@@ -707,14 +500,13 @@
       </div>
 
       <button type="submit" class="btn-primary w-full">Submit report</button>
-
       <p class="submit-note">By submitting you agree to our <a href="#">community standards</a>.</p>
     </form>
   </div>
 </div>
 
 
-<!-- ════════════════════════ FOOTER ══════════════════════════════ -->
+<!-- ══════════════════════════ FOOTER ══════════════════════════════════ -->
 <footer>
   <div class="footer-inner">
     <span class="footer-wordmark">NotMyRecruiter</span>

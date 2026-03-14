@@ -8,7 +8,7 @@ import SearchBar from './SearchBar'
 import FeedCard from './FeedCard'
 
 export default function FeedContent() {
-  const [filter, setFilter] = useState<FilterChip>('recent')
+  const [filter, setFilter] = useState<FilterChip>('all')
   const [search, setSearch] = useState('')
   const [submissions, setSubmissions] = useState<SubmissionWithDetails[]>([])
   const [loading, setLoading] = useState(true)
@@ -21,13 +21,10 @@ export default function FeedContent() {
       .from('submissions')
       .select(`*, recruiters (*, companies (*)), companies (*)`)
       .eq('status', 'published')
+      .order('published_at', { ascending: false })
 
-    if (filter === 'recent') {
-      query = query.order('published_at', { ascending: false })
-    } else if (filter === 'most_flagged') {
-      query = query.order('flag_count', { ascending: false })
-    } else if (filter === 'disputed') {
-      query = query.eq('has_rebuttal', true).order('published_at', { ascending: false })
+    if (filter !== 'all') {
+      query = query.eq('category', filter)
     }
 
     if (search.trim()) {
@@ -62,12 +59,14 @@ export default function FeedContent() {
 
   return (
     <div>
-      {/* Controls */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      {/* Controls: chips left, search right */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
         <div className="flex-1">
+          <FilterChips active={filter} onChange={setFilter} />
+        </div>
+        <div className="sm:w-48 shrink-0">
           <SearchBar value={search} onChange={setSearch} />
         </div>
-        <FilterChips active={filter} onChange={setFilter} />
       </div>
 
       {/* Feed */}

@@ -114,7 +114,12 @@ export interface Dispute {
 
 // ── Feed / UI helpers ────────────────────────────────────────
 
-export type FilterChip = 'all' | 'recent' | 'most_flagged' | 'disputed'
+export type FilterChip =
+  | 'all'
+  | 'ghosted_after_interview'
+  | 'bot_rejection'
+  | 'cancelled_disappeared'
+  | 'cold_outreach_ghost'
 
 export interface SubmissionWithDetails extends Submission {
   recruiters: Recruiter & { companies: Company }

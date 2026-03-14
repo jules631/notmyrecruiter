@@ -3,9 +3,11 @@
 import type { FilterChip } from '@/lib/types'
 
 const CHIPS: { label: string; value: FilterChip }[] = [
-  { label: 'Recent', value: 'recent' },
-  { label: 'Most flagged', value: 'most_flagged' },
-  { label: 'Disputed', value: 'disputed' },
+  { label: 'All',                       value: 'all' },
+  { label: '👻 Ghosted after interview', value: 'ghosted_after_interview' },
+  { label: '🤖 Bot rejection only',      value: 'bot_rejection' },
+  { label: '🚪 Cancelled & disappeared', value: 'cancelled_disappeared' },
+  { label: '📵 Cold outreach ghost',     value: 'cold_outreach_ghost' },
 ]
 
 interface Props {

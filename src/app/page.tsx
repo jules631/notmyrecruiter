@@ -19,32 +19,32 @@ export default function HomePage() {
               padding: '4px 12px',
             }}
           >
-            Community-driven accountability
+            ACCOUNTABILITY FOR CANDIDATES
           </span>
         </div>
 
         {/* H1 */}
         <h1
-          className="font-serif text-[#1a1a1a] mb-4"
+          className="font-serif mb-4"
           style={{ fontSize: '48px', letterSpacing: '-1px', lineHeight: 1.1 }}
         >
-          Recruiter Accountability,<br />
-          <span style={{ color: '#E8453C' }}>Community-Driven.</span>
+          <span style={{ color: '#1a1a1a' }}>Recruiters who ghost deserve to be{' '}</span>
+          <em style={{ color: '#E8453C', fontStyle: 'italic' }}>remembered.</em>
         </h1>
 
         {/* Subtext */}
         <p className="font-sans mb-8 max-w-xl" style={{ fontSize: '16px', color: '#6b6b6b' }}>
-          Real reports from real candidates. When recruiters ghost you after interviews,
-          the community should know.
+          A public record of recruiters who couldn&apos;t extend basic professional courtesy
+          after your time and effort.
         </p>
 
         {/* Stats bar */}
         <div className="grid grid-cols-4 gap-4 py-6 border-y border-[rgba(0,0,0,0.08)]">
           {[
-            { number: '2.4k', label: 'Reports filed' },
-            { number: '89%', label: 'Verified reports' },
-            { number: '14d', label: 'Avg. review time' },
-            { number: '340', label: 'Companies tracked' },
+            { number: '1,284', label: 'Reports submitted' },
+            { number: '392',   label: 'Companies flagged' },
+            { number: '78%',   label: 'Post-interview ghosts' },
+            { number: '14 days', label: 'Avg wait before ghosting' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div
